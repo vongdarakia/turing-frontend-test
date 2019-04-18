@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Router } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import {
     incrementItemInCart,
     decrementItemInCart,
-} from './components/views/cart/duck/actions';
+} from './components/views/Cart/duck/actions';
+import Routes from './routes';
+import history from './routes/history';
 
 class App extends Component {
     render() {
         console.log(this.props);
         return (
             <div className="App">
-                <header className="App-header">
+                <Router history={history}>
+                    <Routes />
+                </Router>
+                {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     {this.props.cart.map((lineItem) => {
                         return (
@@ -42,22 +48,10 @@ class App extends Component {
                     >
                         Decrement
                     </button>
-                </header>
+                </header> */}
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    cart: Object.keys(state.cart).map((key) => state.cart[key]),
-});
-
-const mapDispatchToProps = {
-    incrementItemInCart,
-    decrementItemInCart,
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(App);
+export default App;
