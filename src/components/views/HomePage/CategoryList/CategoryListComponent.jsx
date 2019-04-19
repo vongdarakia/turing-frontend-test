@@ -13,12 +13,18 @@ const Wrapper = styled.div`
 `;
 
 const CategoryListComponent = (props) => {
-    const { categories } = props;
+    const { categories, onSelectCategory } = props;
     return (
         <Wrapper>
             <div className="category-title">Categories</div>
             {categories.map((category) => {
-                return <CategoryListItem category={category} />;
+                return (
+                    <CategoryListItem
+                        key={category.category_id}
+                        category={category}
+                        onClick={() => onSelectCategory(category)}
+                    />
+                );
             })}
         </Wrapper>
     );

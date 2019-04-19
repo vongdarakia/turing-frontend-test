@@ -19,9 +19,16 @@ class CategoryList extends Component {
         this.setState({ categories });
     };
 
+    handleSelectCategory = (category) => {};
+
     render() {
         const { categories } = this.state;
-        return <CategoryListComponent categories={categories} />;
+        return (
+            <CategoryListComponent
+                categories={categories}
+                onSelectCategory={this.handleSelectCategory}
+            />
+        );
     }
 }
 

@@ -7,6 +7,7 @@ import LoginComponent from '../Login/LoginComponent';
 import ProductListComponent from './ProductList/ProductListComponent';
 import ProductListContainer from './ProductList';
 import CategoryList from './CategoryList';
+import DepartmentList from './DepartmentList';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -60,6 +61,8 @@ const HomeComponent = (props) => {
                 </div>
 
                 <CategoryList />
+
+                <DepartmentList />
 
                 <ProductListContainer />
 

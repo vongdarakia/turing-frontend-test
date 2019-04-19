@@ -1,9 +1,13 @@
 import React from 'react';
 
 const CategoryListItem = (props) => {
-    const { category } = props;
+    const { category, onClick } = props;
 
-    return <div>{category.name}</div>;
+    return (
+        <button type="button" onClick={onClick}>
+            {category.name}
+        </button>
+    );
 };
 
 export default CategoryListItem;

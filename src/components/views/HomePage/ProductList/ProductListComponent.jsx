@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import styled from 'styled-components';
 import ProductCard from '../../../common/ProductCard';
@@ -34,7 +32,8 @@ const ProductListComponent = (props) => {
     if (numPages > 1) {
         for (let index = 1; index <= numPages; index += 1) {
             pages.push(
-                <div
+                <button
+                    type="button"
                     key={`page-${index}`}
                     className={`page-number ${
                         page === index ? 'current-page' : ''
@@ -44,7 +43,7 @@ const ProductListComponent = (props) => {
                     }}
                 >
                     {index}
-                </div>,
+                </button>,
             );
         }
     }
