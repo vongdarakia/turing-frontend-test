@@ -4,7 +4,7 @@ import { compose } from 'redux';
 
 import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
-import { registerAccount, login, getCustomer } from './duck/actions';
+import { registerAccount, login, getCustomer, logOut } from './duck/actions';
 import { KEY_TOKEN } from '../../../api/config';
 
 class HomePage extends Component {
@@ -63,8 +63,8 @@ class HomePage extends Component {
         const { onLogin } = this.props;
         const response = await onLogin({ email, password });
 
-        if (response.customer) {
-            this.closeRegisterModal();
+        if (response.user) {
+            this.closeLoginModal();
         }
     };
 
@@ -89,6 +89,7 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => ({
     cart: Object.keys(state.cart).map((key) => state.cart[key]),
+    user: state.user,
 });
 
 const mapDispatchToProps = {
@@ -97,6 +98,7 @@ const mapDispatchToProps = {
     fetchUser: getCustomer,
     onRegister: registerAccount,
     onLogin: login,
+    onLogOut: logOut,
 };
 
 export default compose(

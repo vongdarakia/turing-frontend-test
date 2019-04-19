@@ -18,12 +18,22 @@ const HomeComponent = (props) => {
         onOpenRegisterModal,
         onOpenLoginModal,
         onLogin,
+        onLogOut,
         onRegister,
+        user,
     } = props;
 
     return (
         <div>
             <header className="App-header">
+                {user && (
+                    <div>
+                        <div>Hello {user.name}</div>
+                        <button type="button" onClick={onLogOut}>
+                            Log out
+                        </button>
+                    </div>
+                )}
                 <Modal
                     open={isRegisterModalOpen}
                     onClose={onCloseRegisterModal}

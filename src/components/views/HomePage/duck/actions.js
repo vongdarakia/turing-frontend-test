@@ -35,6 +35,12 @@ export const login = ({ email, password }) => async (dispatch) => {
     return response;
 };
 
+export const logOut = () => async (dispatch) => {
+    delete window.localStorage[KEY_TOKEN];
+
+    dispatch(clearUser());
+};
+
 export const getCustomer = () => async (dispatch) => {
     const response = await TuringAPI.getCustomer();
 
