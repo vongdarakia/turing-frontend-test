@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ProductListComponent from './ProductListComponent';
-import TuringAPI from '../../../api';
+import TuringAPI from '../../../../api';
 
 class ProductListContainer extends Component {
     constructor(props) {

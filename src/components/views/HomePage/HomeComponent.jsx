@@ -4,8 +4,9 @@ import Modal from '@material-ui/core/Modal';
 
 import RegisterComponent from '../Register/RegisterComponent';
 import LoginComponent from '../Login/LoginComponent';
-import ProductListComponent from './ProductListComponent';
-import ProductListContainer from './ProductListContainer';
+import ProductListComponent from './ProductList/ProductListComponent';
+import ProductListContainer from './ProductList';
+import CategoryList from './CategoryList';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -57,6 +58,8 @@ const HomeComponent = (props) => {
                         Login
                     </button>
                 </div>
+
+                <CategoryList />
 
                 <ProductListContainer />
 

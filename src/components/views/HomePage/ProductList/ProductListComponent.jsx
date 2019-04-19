@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import styled from 'styled-components';
-import ProductCard from '../../common/ProductCard';
+import ProductCard from '../../../common/ProductCard';
 
 const Wrapper = styled.div`
     .product-list-pagination {
