@@ -1,11 +1,13 @@
+import categories from './categories';
 import customers from './customers';
-import products from './products';
 import departments from './departments';
+import products from './products';
 
 const TuringAPI = {
+    ...categories,
     ...customers,
-    ...products,
     ...departments,
+    ...products,
 };
 
 export default TuringAPI;

@@ -1,7 +1,7 @@
 import { getBasicHeaders, apiUrl } from './config';
 
 export default {
-    getDepartments: async () => {
+    getAllDepartments: async () => {
         try {
             const response = await fetch(`${apiUrl}/departments`, {
                 method: 'get',
