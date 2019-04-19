@@ -7,9 +7,16 @@ export default {
                 method: 'get',
                 headers: getAuthHeaders(),
             });
-            console.log(data);
+
+            if (data.error) {
+                throw new Error(data.error.message);
+            }
+
+            return {
+                customer: await data.json(),
+            };
         } catch (error) {
-            console.log(error);
+            return { error };
         }
     },
 

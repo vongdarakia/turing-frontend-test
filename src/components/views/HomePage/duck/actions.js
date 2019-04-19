@@ -28,11 +28,18 @@ export const registerAccount = ({ name, email, password }) => async (
 export const login = ({ email, password }) => async (dispatch) => {
     const response = await TuringAPI.login({ email, password });
 
-    console.log(response);
     if (response.user) {
-        console.log('storing token', { token: response.accessToken });
         window.localStorage[KEY_TOKEN] = response.accessToken;
         dispatch(storeUser({ user: response.user }));
+    }
+    return response;
+};
+
+export const getCustomer = () => async (dispatch) => {
+    const response = await TuringAPI.getCustomer();
+
+    if (response.customer) {
+        dispatch(storeUser({ user: response.customer }));
     }
     return response;
 };

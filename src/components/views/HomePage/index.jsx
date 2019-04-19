@@ -4,7 +4,8 @@ import { compose } from 'redux';
 
 import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
-import { registerAccount, login } from './duck/actions';
+import { registerAccount, login, getCustomer } from './duck/actions';
+import { KEY_TOKEN } from '../../../api/config';
 
 class HomePage extends Component {
     constructor(props) {
@@ -14,6 +15,15 @@ class HomePage extends Component {
             isRegisterModalOpen: false,
             isLoginModalOpen: false,
         };
+    }
+
+    componentDidMount() {
+        const token = window.localStorage[KEY_TOKEN];
+        const { fetchUser } = this.props;
+
+        if (token) {
+            fetchUser();
+        }
     }
 
     openRegisterModal = () => {
@@ -84,6 +94,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     incrementItemInCart,
     decrementItemInCart,
+    fetchUser: getCustomer,
     onRegister: registerAccount,
     onLogin: login,
 };
