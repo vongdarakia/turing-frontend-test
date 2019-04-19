@@ -12,5 +12,6 @@ module.exports = {
         document: true,
         window: true,
         fetch: true,
+        Headers: true,
     },
 };

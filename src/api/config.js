@@ -12,6 +12,6 @@ export const getAuthHeaders = () => {
 
     return new Headers({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
     });
 };

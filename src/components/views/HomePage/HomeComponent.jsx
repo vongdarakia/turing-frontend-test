@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '@material-ui/core/Modal';
 
-import logo from '../../../logo.svg';
 import RegisterComponent from '../Register/RegisterComponent';
+import LoginComponent from '../Login/LoginComponent';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
     const {
         cart,
-        incrementItemInCart,
         decrementItemInCart,
+        incrementItemInCart,
         isRegisterModalOpen,
+        isLoginModalOpen,
         onCloseRegisterModal,
+        onCloseLoginModal,
         onOpenRegisterModal,
+        onOpenLoginModal,
+        onLogin,
         onRegister,
     } = props;
 
@@ -26,11 +30,17 @@ const HomeComponent = (props) => {
                 >
                     <RegisterComponent onRegister={onRegister} />
                 </Modal>
+
+                <Modal open={isLoginModalOpen} onClose={onCloseLoginModal}>
+                    <LoginComponent onLogin={onLogin} />
+                </Modal>
                 <div>
                     <button type="button" onClick={onOpenRegisterModal}>
                         Register
                     </button>
-                    <button type="button">Login</button>
+                    <button type="button" onClick={onOpenLoginModal}>
+                        Login
+                    </button>
                 </div>
 
                 {cart.map((lineItem) => {

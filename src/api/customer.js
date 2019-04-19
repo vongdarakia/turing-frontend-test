@@ -57,12 +57,11 @@ export default {
             console.log(data);
             return data.json();
         } catch (error) {
-            console.log(error);
             return { error };
         }
     },
 
-    signin: async ({ email, password } = {}) => {
+    login: async ({ email, password } = {}) => {
         try {
             const data = await fetch(`${apiUrl}/customers/login`, {
                 method: 'post',
@@ -70,8 +69,9 @@ export default {
                 body: JSON.stringify({ email, password }),
             });
             console.log(data);
+            return data.json();
         } catch (error) {
-            console.log(error);
+            return { error };
         }
     },
 

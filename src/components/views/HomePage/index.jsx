@@ -4,7 +4,7 @@ import { compose } from 'redux';
 
 import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
-import { registerAccount } from './duck/actions';
+import { registerAccount, login } from './duck/actions';
 
 class HomePage extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class HomePage extends Component {
 
         this.state = {
             isRegisterModalOpen: false,
+            isLoginModalOpen: false,
         };
     }
 
@@ -27,6 +28,18 @@ class HomePage extends Component {
         });
     };
 
+    openLoginModal = () => {
+        this.setState({
+            isLoginModalOpen: true,
+        });
+    };
+
+    closeLoginModal = () => {
+        this.setState({
+            isLoginModalOpen: false,
+        });
+    };
+
     handleRegister = async ({ name, email, password }) => {
         const { onRegister } = this.props;
         const response = await onRegister({ name, email, password });
@@ -36,8 +49,17 @@ class HomePage extends Component {
         }
     };
 
+    handleLogin = async ({ email, password }) => {
+        const { onLogin } = this.props;
+        const response = await onLogin({ email, password });
+
+        if (response.customer) {
+            this.closeRegisterModal();
+        }
+    };
+
     render() {
-        const { isRegisterModalOpen } = this.state;
+        const { isRegisterModalOpen, isLoginModalOpen } = this.state;
 
         return (
             <HomeComponent
@@ -46,6 +68,10 @@ class HomePage extends Component {
                 onRegister={this.handleRegister}
                 onOpenRegisterModal={this.openRegisterModal}
                 onCloseRegisterModal={this.closeRegisterModal}
+                onLogin={this.handleLogin}
+                isLoginModalOpen={isLoginModalOpen}
+                onCloseLoginModal={this.closeLoginModal}
+                onOpenLoginModal={this.openLoginModal}
             />
         );
     }
@@ -59,6 +85,7 @@ const mapDispatchToProps = {
     incrementItemInCart,
     decrementItemInCart,
     onRegister: registerAccount,
+    onLogin: login,
 };
 
 export default compose(
