@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import RegisterComponent from '../Register/RegisterComponent';
 import LoginComponent from '../Login/LoginComponent';
 import ProductListComponent from './ProductListComponent';
+import ProductListContainer from './ProductListContainer';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -57,10 +58,7 @@ const HomeComponent = (props) => {
                     </button>
                 </div>
 
-                <ProductListComponent
-                    products={products}
-                    totalProducts={totalProducts}
-                />
+                <ProductListContainer />
 
                 {cart.map((lineItem) => {
                     return (

@@ -1,14 +1,21 @@
 import { getBasicHeaders, getAuthHeaders, apiUrl } from './config';
 import prepareRequestBody from '../utils/prepare-request-body';
+import prepareRequestParams from '../utils/prepare-request-params';
 
 export default {
     getAllProducts: async ({ page, limit, description_length } = {}) => {
         try {
-            const response = await fetch(`${apiUrl}/products`, {
-                method: 'get',
-                headers: getBasicHeaders(),
-                body: prepareRequestBody({ page, limit, description_length }),
-            });
+            const response = await fetch(
+                `${apiUrl}/products${prepareRequestParams({
+                    page,
+                    limit,
+                    description_length,
+                })}`,
+                {
+                    method: 'get',
+                    headers: getBasicHeaders(),
+                },
+            );
 
             const { rows, count } = await response.json();
             return { products: rows, count };

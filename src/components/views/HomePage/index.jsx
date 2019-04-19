@@ -15,8 +15,6 @@ class HomePage extends Component {
         this.state = {
             isRegisterModalOpen: false,
             isLoginModalOpen: false,
-            products: [],
-            totalProducts: 0,
         };
     }
 
@@ -27,12 +25,6 @@ class HomePage extends Component {
         if (token) {
             fetchUser();
         }
-
-        const { products, count } = await TuringAPI.getAllProducts();
-        this.setState({
-            products,
-            totalProducts: count,
-        });
     };
 
     openRegisterModal = () => {
@@ -78,12 +70,7 @@ class HomePage extends Component {
     };
 
     render() {
-        const {
-            isRegisterModalOpen,
-            isLoginModalOpen,
-            products,
-            totalProducts,
-        } = this.state;
+        const { isRegisterModalOpen, isLoginModalOpen } = this.state;
 
         return (
             <HomeComponent
@@ -96,8 +83,6 @@ class HomePage extends Component {
                 isLoginModalOpen={isLoginModalOpen}
                 onCloseLoginModal={this.closeLoginModal}
                 onOpenLoginModal={this.openLoginModal}
-                products={products}
-                totalProducts={totalProducts}
             />
         );
     }
