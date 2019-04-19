@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 
 import RegisterComponent from '../Register/RegisterComponent';
 import LoginComponent from '../Login/LoginComponent';
+import ProductListComponent from './ProductListComponent';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -20,6 +21,8 @@ const HomeComponent = (props) => {
         onLogin,
         onLogOut,
         onRegister,
+        products,
+        totalProducts,
         user,
     } = props;
 
@@ -44,6 +47,7 @@ const HomeComponent = (props) => {
                 <Modal open={isLoginModalOpen} onClose={onCloseLoginModal}>
                     <LoginComponent onLogin={onLogin} />
                 </Modal>
+
                 <div>
                     <button type="button" onClick={onOpenRegisterModal}>
                         Register
@@ -52,6 +56,11 @@ const HomeComponent = (props) => {
                         Login
                     </button>
                 </div>
+
+                <ProductListComponent
+                    products={products}
+                    totalProducts={totalProducts}
+                />
 
                 {cart.map((lineItem) => {
                     return (

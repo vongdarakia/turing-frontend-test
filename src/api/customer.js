@@ -1,19 +1,16 @@
 import { getBasicHeaders, getAuthHeaders, apiUrl } from './config';
+import prepareRequestBody from '../utils/prepare-request-body';
 
 export default {
     getCustomer: async () => {
         try {
-            const data = await fetch(`${apiUrl}/customer`, {
+            const response = await fetch(`${apiUrl}/customer`, {
                 method: 'get',
                 headers: getAuthHeaders(),
             });
 
-            if (data.error) {
-                throw new Error(data.error.message);
-            }
-
             return {
-                customer: await data.json(),
+                customer: await response.json(),
             };
         } catch (error) {
             return { error };
@@ -36,10 +33,10 @@ export default {
                 );
             }
 
-            const data = await fetch(`${apiUrl}/customer`, {
+            const response = await fetch(`${apiUrl}/customer`, {
                 method: 'put',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({
+                body: prepareRequestBody({
                     name,
                     email,
                     password,
@@ -48,7 +45,7 @@ export default {
                     mob_phone,
                 }),
             });
-            console.log(data);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -56,13 +53,13 @@ export default {
 
     register: async ({ name, email, password } = {}) => {
         try {
-            const data = await fetch(`${apiUrl}/customers`, {
+            const response = await fetch(`${apiUrl}/customers`, {
                 method: 'post',
                 headers: getBasicHeaders(),
-                body: JSON.stringify({ name, email, password }),
+                body: prepareRequestBody({ name, email, password }),
             });
-            console.log(data);
-            return data.json();
+            console.log(response);
+            return response.json();
         } catch (error) {
             return { error };
         }
@@ -70,13 +67,13 @@ export default {
 
     login: async ({ email, password } = {}) => {
         try {
-            const data = await fetch(`${apiUrl}/customers/login`, {
+            const response = await fetch(`${apiUrl}/customers/login`, {
                 method: 'post',
                 headers: getBasicHeaders(),
-                body: JSON.stringify({ email, password }),
+                body: prepareRequestBody({ email, password }),
             });
-            console.log(data);
-            return data.json();
+            console.log(response);
+            return response.json();
         } catch (error) {
             return { error };
         }
@@ -108,10 +105,10 @@ export default {
                 );
             }
 
-            const data = await fetch(`${apiUrl}/customers/address`, {
+            const response = await fetch(`${apiUrl}/customers/address`, {
                 method: 'put',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({
+                body: prepareRequestBody({
                     address_1,
                     address_2,
                     city,
@@ -121,7 +118,7 @@ export default {
                     shipping_region_id,
                 }),
             });
-            console.log(data);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -135,14 +132,14 @@ export default {
                 );
             }
 
-            const data = await fetch(`${apiUrl}/customers/creditCard`, {
+            const response = await fetch(`${apiUrl}/customers/creditCard`, {
                 method: 'put',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({
+                body: prepareRequestBody({
                     credit_card,
                 }),
             });
-            console.log(data);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }

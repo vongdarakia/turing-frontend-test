@@ -6,6 +6,7 @@ import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
 import { registerAccount, login, getCustomer, logOut } from './duck/actions';
 import { KEY_TOKEN } from '../../../api/config';
+import TuringAPI from '../../../api';
 
 class HomePage extends Component {
     constructor(props) {
@@ -14,17 +15,25 @@ class HomePage extends Component {
         this.state = {
             isRegisterModalOpen: false,
             isLoginModalOpen: false,
+            products: [],
+            totalProducts: 0,
         };
     }
 
-    componentDidMount() {
+    componentDidMount = async () => {
         const token = window.localStorage[KEY_TOKEN];
         const { fetchUser } = this.props;
 
         if (token) {
             fetchUser();
         }
-    }
+
+        const { products, count } = await TuringAPI.getAllProducts();
+        this.setState({
+            products,
+            totalProducts: count,
+        });
+    };
 
     openRegisterModal = () => {
         this.setState({
@@ -69,7 +78,12 @@ class HomePage extends Component {
     };
 
     render() {
-        const { isRegisterModalOpen, isLoginModalOpen } = this.state;
+        const {
+            isRegisterModalOpen,
+            isLoginModalOpen,
+            products,
+            totalProducts,
+        } = this.state;
 
         return (
             <HomeComponent
@@ -82,6 +96,8 @@ class HomePage extends Component {
                 isLoginModalOpen={isLoginModalOpen}
                 onCloseLoginModal={this.closeLoginModal}
                 onOpenLoginModal={this.openLoginModal}
+                products={products}
+                totalProducts={totalProducts}
             />
         );
     }
