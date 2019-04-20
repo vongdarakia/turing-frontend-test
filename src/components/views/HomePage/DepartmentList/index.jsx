@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 
 import DepartmentListComponent from './DepartmentListComponent';
 import TuringAPI from '../../../../api';
+import { selectDepartment } from '../duck/actions';
 
 class DepartmentList extends Component {
     constructor(props) {
@@ -18,10 +18,34 @@ class DepartmentList extends Component {
         this.setState({ departments });
     };
 
+    handleSelectDepartment = (department) => {
+        const { onSelectDepartment } = this.props;
+        onSelectDepartment(department);
+    };
+
     render() {
         const { departments } = this.state;
-        return <DepartmentListComponent departments={departments} />;
+        const { selectedDepartment } = this.props;
+
+        return (
+            <DepartmentListComponent
+                departments={departments}
+                onSelectDepartment={this.handleSelectDepartment}
+                selectedDepartment={selectedDepartment}
+            />
+        );
     }
 }
 
-export default DepartmentList;
+const mapStateToProps = (state) => ({
+    selectedDepartment: state.main.selectedDepartment,
+});
+
+const mapDispatchToProps = {
+    onSelectDepartment: selectDepartment,
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(DepartmentList);

@@ -90,7 +90,7 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => ({
     cart: Object.keys(state.cart).map((key) => state.cart[key]),
-    user: state.user,
+    user: state.main.user,
 });
 
 const mapDispatchToProps = {

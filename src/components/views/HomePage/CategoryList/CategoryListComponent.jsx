@@ -13,7 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const CategoryListComponent = (props) => {
-    const { categories, onSelectCategory } = props;
+    const { categories, onSelectCategory, selectedCategory } = props;
+    const selectedId = (selectedCategory || {}).category_id;
+
     return (
         <Wrapper>
             <div className="category-title">Categories</div>
@@ -23,6 +25,7 @@ const CategoryListComponent = (props) => {
                         key={category.category_id}
                         category={category}
                         onClick={() => onSelectCategory(category)}
+                        isSelected={category.category_id === selectedId}
                     />
                 );
             })}

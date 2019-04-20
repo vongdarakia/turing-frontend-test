@@ -13,7 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const DepartmentListComponent = (props) => {
-    const { departments, onSelectDepartment } = props;
+    const { departments, onSelectDepartment, selectedDepartment } = props;
+    const selectedId = (selectedDepartment || {}).department_id;
+
     return (
         <Wrapper>
             <div className="department-title">Departments</div>
@@ -25,6 +27,7 @@ const DepartmentListComponent = (props) => {
                         onClick={() => {
                             onSelectDepartment(department);
                         }}
+                        isSelected={department.department_id === selectedId}
                     />
                 );
             })}

@@ -1,4 +1,11 @@
-import { STORE_USER, CLEAR_USER } from './types';
+import {
+    STORE_USER,
+    CLEAR_USER,
+    SELECT_CATEGORY,
+    CLEAR_CATEGORY,
+    SELECT_DEPARTMENT,
+    CLEAR_DEPARTMENT,
+} from './types';
 import TuringAPI from '../../../../api';
 import { KEY_TOKEN } from '../../../../api/config';
 
@@ -49,3 +56,21 @@ export const getCustomer = () => async (dispatch) => {
     }
     return response;
 };
+
+export const selectCategory = (category) => ({
+    type: SELECT_CATEGORY,
+    payload: { category },
+});
+
+export const clearCategory = () => ({
+    type: CLEAR_CATEGORY,
+});
+
+export const selectDepartment = (department) => ({
+    type: SELECT_DEPARTMENT,
+    payload: { department },
+});
+
+export const clearDepartment = () => ({
+    type: CLEAR_DEPARTMENT,
+});
