@@ -33,7 +33,7 @@ class ProductList extends Component {
             selectedCategory: prevCategory,
         } = this.props;
 
-        if (nextCategory !== prevCategory) {
+        if (nextCategory !== prevCategory && nextCategory) {
             if (
                 nextCategory &&
                 prevCategory &&
@@ -41,16 +41,16 @@ class ProductList extends Component {
             ) {
                 return;
             }
+
+            this.setState({ page: 1 });
+
             await this.loadProducts({
                 category_id: (nextCategory || {}).category_id,
             });
             return;
         }
 
-        if (
-            nextDept !== prevDept &&
-            !(nextCategory && nextCategory.category_id)
-        ) {
+        if (nextDept !== prevDept && nextDept) {
             if (
                 nextDept &&
                 prevDept &&
@@ -58,9 +58,20 @@ class ProductList extends Component {
             ) {
                 return;
             }
+
+            this.setState({ page: 1 });
+
             await this.loadProducts({
                 department_id: (nextDept || {}).department_id,
             });
+            return;
+        }
+
+        if (
+            (nextDept !== prevDept && !nextDept) ||
+            (nextCategory !== prevCategory && !nextCategory)
+        ) {
+            await this.loadProducts();
         }
     };
 
