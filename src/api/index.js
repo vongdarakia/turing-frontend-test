@@ -5,6 +5,7 @@ import departments from './departments';
 import products from './products';
 import objectIsSame from '../utils/object-is-same';
 import stripe from './stripe';
+import orders from './orders';
 
 const memoizeFunctions = (functionsTable, restrictedFunctions) => {
     const memoizedFunctionsTable = {};
@@ -29,6 +30,7 @@ const apiCalls = {
     ...departments,
     ...products,
     ...stripe,
+    ...orders,
 };
 
 // Spreading the API call first so that the IDE can pick up what functions are
