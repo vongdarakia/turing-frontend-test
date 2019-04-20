@@ -4,6 +4,7 @@ import customers from './customers';
 import departments from './departments';
 import products from './products';
 import objectIsSame from '../utils/object-is-same';
+import stripe from './stripe';
 
 const memoizeFunctions = (functionsTable, restrictedFunctions) => {
     const memoizedFunctionsTable = {};
@@ -27,6 +28,7 @@ const apiCalls = {
     ...customers,
     ...departments,
     ...products,
+    ...stripe,
 };
 
 // Spreading the API call first so that the IDE can pick up what functions are
@@ -42,6 +44,7 @@ const TuringAPI = {
         'postProductReviews',
         'register',
         'login',
+        'stripeCharge',
     ]),
 };
 

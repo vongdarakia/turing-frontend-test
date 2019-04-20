@@ -8,6 +8,7 @@ import ProductListComponent from './ProductList/ProductListComponent';
 import ProductListContainer from './ProductList';
 import CategoryList from './CategoryList';
 import DepartmentList from './DepartmentList';
+import Checkout from '../Checkout';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -54,7 +55,7 @@ const HomeComponent = (props) => {
                         onLoginWithFacebook={onLoginWithFacebook}
                     />
                 </Modal>
-
+                <Checkout />
                 <div>
                     <button type="button" onClick={onOpenRegisterModal}>
                         Register
