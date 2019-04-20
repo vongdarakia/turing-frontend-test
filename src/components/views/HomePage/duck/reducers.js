@@ -34,6 +34,7 @@ export default (state = main, { type, payload } = {}) => {
             return {
                 ...state,
                 selectedDepartment: payload.department,
+                selectedCategory: null,
             };
         case CLEAR_CATEGORY:
             return {

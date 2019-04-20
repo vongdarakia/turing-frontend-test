@@ -1,5 +1,4 @@
 import { getBasicHeaders, getAuthHeaders, apiUrl } from './config';
-import prepareRequestBody from '../utils/prepare-request-body';
 import prepareRequestParams from '../utils/prepare-request-params';
 
 export default {
@@ -32,17 +31,19 @@ export default {
         description_length,
     } = {}) => {
         try {
-            const response = await fetch(`${apiUrl}/products/search`, {
-                method: 'get',
-                headers: getBasicHeaders(),
-                body: prepareRequestBody({
+            const response = await fetch(
+                `${apiUrl}/products/search${prepareRequestParams({
                     query_string,
                     all_words,
                     page,
                     limit,
                     description_length,
-                }),
-            });
+                })}`,
+                {
+                    method: 'get',
+                    headers: getBasicHeaders(),
+                },
+            );
 
             const { rows, count } = await response.json();
             return { products: rows, count };
@@ -56,7 +57,6 @@ export default {
             const response = await fetch(`${apiUrl}/products/${product_id}`, {
                 method: 'get',
                 headers: getBasicHeaders(),
-                body: prepareRequestBody({ product_id }),
             });
 
             const product = await response.json();
@@ -74,16 +74,17 @@ export default {
     } = {}) => {
         try {
             const response = await fetch(
-                `${apiUrl}/products/inCategory/${category_id}`,
-                {
-                    method: 'get',
-                    headers: getBasicHeaders(),
-                    body: prepareRequestBody({
+                `${apiUrl}/products/inCategory/${category_id}${prepareRequestParams(
+                    {
                         category_id,
                         page,
                         limit,
                         description_length,
-                    }),
+                    },
+                )}`,
+                {
+                    method: 'get',
+                    headers: getBasicHeaders(),
                 },
             );
 
@@ -102,16 +103,17 @@ export default {
     } = {}) => {
         try {
             const response = await fetch(
-                `${apiUrl}/products/inDepartment/${department_id}`,
-                {
-                    method: 'get',
-                    headers: getBasicHeaders(),
-                    body: prepareRequestBody({
+                `${apiUrl}/products/inDepartment/${department_id}${prepareRequestParams(
+                    {
                         department_id,
                         page,
                         limit,
                         description_length,
-                    }),
+                    },
+                )}`,
+                {
+                    method: 'get',
+                    headers: getBasicHeaders(),
                 },
             );
 
@@ -129,9 +131,6 @@ export default {
                 {
                     method: 'get',
                     headers: getBasicHeaders(),
-                    body: prepareRequestBody({
-                        product_id,
-                    }),
                 },
             );
 
@@ -148,9 +147,6 @@ export default {
                 {
                     method: 'get',
                     headers: getBasicHeaders(),
-                    body: prepareRequestBody({
-                        product_id,
-                    }),
                 },
             );
 
@@ -167,9 +163,6 @@ export default {
                 {
                     method: 'get',
                     headers: getBasicHeaders(),
-                    body: prepareRequestBody({
-                        product_id,
-                    }),
                 },
             );
 
@@ -182,15 +175,16 @@ export default {
     postProductReviews: async ({ product_id, review, rating } = {}) => {
         try {
             const response = await fetch(
-                `${apiUrl}/products/${product_id}/reviews`,
-                {
-                    method: 'post',
-                    headers: getAuthHeaders(),
-                    body: prepareRequestBody({
+                `${apiUrl}/products/${product_id}/reviews${prepareRequestParams(
+                    {
                         product_id,
                         review,
                         rating,
-                    }),
+                    },
+                )}`,
+                {
+                    method: 'post',
+                    headers: getAuthHeaders(),
                 },
             );
 
