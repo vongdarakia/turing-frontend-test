@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FacebookLogin from 'react-facebook-login';
+import styled from 'styled-components';
+import TuringAPI from '../../../api';
+
+const Wrapper = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    input {
+        height: initial;
+    }
+`;
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -23,6 +35,11 @@ class LoginComponent extends Component {
         onLogin({ email, password });
     };
 
+    handleFacebookLogin = ({ accessToken } = {}) => {
+        const { onLoginWithFacebook } = this.props;
+        onLoginWithFacebook({ accessToken });
+    };
+
     render() {
         return (
             <div>
@@ -35,6 +52,13 @@ class LoginComponent extends Component {
                 <button type="button" onClick={this.handleLogin}>
                     Login
                 </button>
+                <FacebookLogin
+                    appId="352854622106208"
+                    // autoLoad={true}
+                    fields="name,email,picture"
+                    onClick={() => console.log('click')}
+                    callback={this.handleFacebookLogin}
+                />
             </div>
         );
     }

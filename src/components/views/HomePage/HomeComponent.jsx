@@ -22,6 +22,7 @@ const HomeComponent = (props) => {
         onOpenRegisterModal,
         onOpenLoginModal,
         onLogin,
+        onLoginWithFacebook,
         onLogOut,
         onRegister,
         products,
@@ -48,7 +49,10 @@ const HomeComponent = (props) => {
                 </Modal>
 
                 <Modal open={isLoginModalOpen} onClose={onCloseLoginModal}>
-                    <LoginComponent onLogin={onLogin} />
+                    <LoginComponent
+                        onLogin={onLogin}
+                        onLoginWithFacebook={onLoginWithFacebook}
+                    />
                 </Modal>
 
                 <div>

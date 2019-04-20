@@ -42,6 +42,16 @@ export const login = ({ email, password }) => async (dispatch) => {
     return response;
 };
 
+export const loginWithFacebook = ({ accessToken }) => async (dispatch) => {
+    const response = await TuringAPI.loginWithFacebook({ accessToken });
+
+    if (response.customer) {
+        window.localStorage[KEY_TOKEN] = response.accessToken;
+        dispatch(storeUser({ user: response.customer }));
+    }
+    return response;
+};
+
 export const logOut = () => async (dispatch) => {
     delete window.localStorage[KEY_TOKEN];
 

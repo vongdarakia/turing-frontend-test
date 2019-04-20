@@ -79,6 +79,21 @@ export default {
         }
     },
 
+    loginWithFacebook: async ({ accessToken } = {}) => {
+        console.log(accessToken);
+        try {
+            const response = await fetch(`${apiUrl}/customers/facebook`, {
+                method: 'post',
+                headers: getBasicHeaders(),
+                body: prepareRequestBody({ access_token: accessToken }),
+            });
+            console.log({ response, accessToken });
+            return response.json();
+        } catch (error) {
+            return { error };
+        }
+    },
+
     updateCustomerAddress: async ({
         address_1,
         address_2,

@@ -4,7 +4,13 @@ import { compose } from 'redux';
 
 import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
-import { registerAccount, login, getCustomer, logOut } from './duck/actions';
+import {
+    registerAccount,
+    login,
+    getCustomer,
+    logOut,
+    loginWithFacebook,
+} from './duck/actions';
 import { KEY_TOKEN } from '../../../api/config';
 import TuringAPI from '../../../api';
 
@@ -69,6 +75,15 @@ class HomePage extends Component {
         }
     };
 
+    handleLoginWithFacebook = async ({ accessToken }) => {
+        const { onLoginWithFacebook } = this.props;
+        const response = await onLoginWithFacebook({ accessToken });
+        console.log({ response });
+        if (response.customer) {
+            this.closeLoginModal();
+        }
+    };
+
     render() {
         const { isRegisterModalOpen, isLoginModalOpen } = this.state;
 
@@ -80,6 +95,7 @@ class HomePage extends Component {
                 onOpenRegisterModal={this.openRegisterModal}
                 onCloseRegisterModal={this.closeRegisterModal}
                 onLogin={this.handleLogin}
+                onLoginWithFacebook={this.handleLoginWithFacebook}
                 isLoginModalOpen={isLoginModalOpen}
                 onCloseLoginModal={this.closeLoginModal}
                 onOpenLoginModal={this.openLoginModal}
@@ -99,6 +115,7 @@ const mapDispatchToProps = {
     fetchUser: getCustomer,
     onRegister: registerAccount,
     onLogin: login,
+    onLoginWithFacebook: loginWithFacebook,
     onLogOut: logOut,
 };
 
