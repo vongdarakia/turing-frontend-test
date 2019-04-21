@@ -15,8 +15,38 @@ import { loginWithFacebook } from './components/views/HomePage/duck/actions';
 import { KEY_TOKEN } from './api/config';
 import TuringAPI from './api';
 import { KEY_CART_ID } from './components/views/Cart/duck/types';
+import DeliveryView from './components/views/Checkout/DeliveryView';
 
 const MainStyles = styled.div`
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #6c6c6c;
+
+    small {
+        font-size: 12px;
+    }
+
+    h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 24px;
+        color: #2e2e2e;
+        line-height: 150%;
+    }
+
+    h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        color: #2e2e2e;
+        line-height: 150%;
+    }
+
+    .topbar {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        color: #2e2e2e;
+        line-height: 240%;
+    }
+
     .facebook-auto-login {
         display: none;
     }
@@ -47,14 +77,14 @@ class App extends Component {
         // });
 
         // const taxes = await TuringAPI.getAllTaxes();
-        // const regions = await TuringAPI.getAllShippingRegions();
-        // const shipping = await TuringAPI.getShippingOptionsByRegionId({
-        //     shipping_region_id: 3,
-        // });
+        const regions = await TuringAPI.getAllShippingRegions();
+        const shipping = await TuringAPI.getShippingOptionsByRegionId({
+            shipping_region_id: 2,
+        });
 
         const customer = await TuringAPI.getCustomer();
 
-        // console.log({ taxes, regions, shipping });
+        console.log({ regions, shipping });
 
         const { orderId } = await TuringAPI.createOrder({
             cart_id,
@@ -100,6 +130,7 @@ class App extends Component {
                 <Router history={history}>
                     <Routes />
                 </Router>
+                <DeliveryView />
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     {this.props.cart.map((lineItem) => {

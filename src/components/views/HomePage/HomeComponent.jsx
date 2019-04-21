@@ -34,7 +34,7 @@ const HomeComponent = (props) => {
     return (
         <div>
             <header className="App-header">
-                {user && (
+                {/* {user && (
                     <div>
                         <div>Hello {user.name}</div>
                         <button type="button" onClick={onLogOut}>
@@ -99,7 +99,7 @@ const HomeComponent = (props) => {
                     }}
                 >
                     Decrement
-                </button>
+                </button> */}
                 <Link to="/product/abc">Go to product</Link>
             </header>
         </div>
