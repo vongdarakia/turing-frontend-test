@@ -42,6 +42,10 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: row;
     }
+
+    .delivery-options-section {
+        margin-bottom: 24px;
+    }
 `;
 
 const DeliveryViewComponent = (props) => {
@@ -66,7 +70,7 @@ const DeliveryViewComponent = (props) => {
     } = props;
 
     return (
-        <Wrapper>
+        <Wrapper className="checkout-view">
             <div className="form-address">
                 <div className="form-row">
                     <div className="form-col col-left">
@@ -143,7 +147,7 @@ const DeliveryViewComponent = (props) => {
                 </div>
             </div>
 
-            <div>
+            <div className="delivery-options-section">
                 <h2>Delivery Options</h2>
 
                 {shippingOptions.length > 0 && (

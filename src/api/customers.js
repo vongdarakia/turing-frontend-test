@@ -105,15 +105,21 @@ export default {
         try {
             // TODO: Can be made cleaner to show specific attributes that are missing
             if (
-                !(
-                    address_1 &&
-                    city &&
-                    region &&
-                    postal_code &&
-                    country &&
-                    shipping_region_id
-                )
+                address_1 === undefined ||
+                city === undefined ||
+                region === undefined ||
+                postal_code === undefined ||
+                country === undefined ||
+                shipping_region_id === undefined
             ) {
+                console.log({
+                    address_1,
+                    city,
+                    region,
+                    postal_code,
+                    country,
+                    shipping_region_id,
+                });
                 throw new Error(
                     'address_1, city, region, postal_code, country and shipping_region_id are required to update address',
                 );
@@ -132,7 +138,15 @@ export default {
                     shipping_region_id,
                 }),
             });
-            console.log(response);
+
+            const result = await response.json();
+            console.log(result);
+
+            if (result.error) {
+                throw new Error(result.error.message);
+            }
+
+            return result;
         } catch (error) {
             console.log(error);
         }

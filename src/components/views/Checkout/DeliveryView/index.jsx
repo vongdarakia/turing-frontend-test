@@ -13,11 +13,19 @@ import {
     updateState,
 } from '../duck/actions';
 import TuringAPI from '../../../../api';
+import ViewFooter from '../../../common/ViewFooter';
 
 class DeliverView extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            btnPropsPrimary: {
+                onClick: this.handleGoNext,
+            },
+            btnPropsSecondary: {
+                onClick: this.handleGoBack,
+            },
+        };
     }
 
     componentDidMount = async () => {
@@ -50,7 +58,7 @@ class DeliverView extends Component {
             const {
                 address_1: userAddress,
                 city: userCity,
-                state: userState,
+                region: userState,
                 postal_code: userZipCode,
             } = user;
             const [userFirstName, userLastName] = user.name.split(' ');
@@ -122,6 +130,33 @@ class DeliverView extends Component {
         changeShippingOptionId(e.target.value);
     };
 
+    handleGoNext = async () => {
+        const {
+            firstName,
+            lastName,
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+            shippingOptionId,
+            user,
+        } = this.props;
+
+        const response = await TuringAPI.updateCustomerAddress({
+            address_1: address,
+            city,
+            region: state || user.region,
+            postal_code: zipCode,
+            shipping_region_id: user.shipping_region_id,
+            country: country || user.country,
+        });
+
+        console.log(response);
+    };
+
+    handleGoBack = () => {};
+
     render() {
         const {
             firstName,
@@ -133,28 +168,40 @@ class DeliverView extends Component {
             country,
             shippingOptionId,
         } = this.props;
-        const { shippingOptions } = this.state;
+        const {
+            shippingOptions,
+            btnPropsPrimary,
+            btnPropsSecondary,
+        } = this.state;
 
         return (
-            <DeliveryViewComponent
-                firstName={firstName}
-                lastName={lastName}
-                address={address}
-                city={city}
-                state={state}
-                zipCode={zipCode}
-                country={country}
-                shippingOptionId={shippingOptionId}
-                shippingOptions={shippingOptions}
-                onChangeAddress={this.handleChangeAddress}
-                onChangeCity={this.handleChangeCity}
-                onChangeFirstName={this.handleChangeFirstName}
-                onChangeLastName={this.handleChangeLastName}
-                onChangeState={this.handleChangeState}
-                onChangeZipCode={this.handleChangeZipCode}
-                onChangeCountry={this.handleChangeCountry}
-                onChangeShippingOptionId={this.handleChangeShippingOptionId}
-            />
+            <div>
+                <DeliveryViewComponent
+                    firstName={firstName}
+                    lastName={lastName}
+                    address={address}
+                    city={city}
+                    state={state}
+                    zipCode={zipCode}
+                    country={country}
+                    shippingOptionId={shippingOptionId}
+                    shippingOptions={shippingOptions}
+                    onChangeAddress={this.handleChangeAddress}
+                    onChangeCity={this.handleChangeCity}
+                    onChangeFirstName={this.handleChangeFirstName}
+                    onChangeLastName={this.handleChangeLastName}
+                    onChangeState={this.handleChangeState}
+                    onChangeZipCode={this.handleChangeZipCode}
+                    onChangeCountry={this.handleChangeCountry}
+                    onChangeShippingOptionId={this.handleChangeShippingOptionId}
+                />
+                <ViewFooter
+                    labelPrimary="Next Step"
+                    labelSecondary="Back"
+                    btnPropsPrimary={btnPropsPrimary}
+                    btnPropsSecondary={btnPropsSecondary}
+                />
+            </div>
         );
     }
 }
