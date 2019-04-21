@@ -1,13 +1,16 @@
 import nanomemoize from 'nano-memoize';
+import objectIsSame from '../utils/object-is-same';
 import categories from './categories';
 import customers from './customers';
 import departments from './departments';
-import products from './products';
-import objectIsSame from '../utils/object-is-same';
-import stripe from './stripe';
 import orders from './orders';
+import products from './products';
+import shoppingCart from './shopping-cart';
+import stripe from './stripe';
+import taxes from './taxes';
+import shipping from './shipping';
 
-const memoizeFunctions = (functionsTable, restrictedFunctions) => {
+const memoizeFunctions = (functionsTable, restrictedFunctions = []) => {
     const memoizedFunctionsTable = {};
 
     Object.keys(functionsTable).forEach((key) => {
@@ -26,11 +29,10 @@ const memoizeFunctions = (functionsTable, restrictedFunctions) => {
 
 const apiCalls = {
     ...categories,
-    ...customers,
     ...departments,
     ...products,
-    ...stripe,
-    ...orders,
+    ...taxes,
+    ...shipping,
 };
 
 // Spreading the API call first so that the IDE can pick up what functions are
@@ -38,16 +40,11 @@ const apiCalls = {
 // Then rewriting them with their memoized version.
 const TuringAPI = {
     ...apiCalls,
-    ...memoizeFunctions(apiCalls, [
-        'getCustomer',
-        'updateCustomer',
-        'updateCustomerAddress',
-        'updateCustomerCreditCard',
-        'postProductReviews',
-        'register',
-        'login',
-        'stripeCharge',
-    ]),
+    ...customers,
+    ...shoppingCart,
+    ...stripe,
+    ...orders,
+    ...memoizeFunctions(apiCalls),
 };
 
 export default TuringAPI;

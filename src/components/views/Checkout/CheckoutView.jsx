@@ -84,7 +84,48 @@ class CheckoutView extends Component {
                 address_country: '',
             });
             console.log({ token, user, error });
-            // TuringAPI.stripeCharge({ stripeToken: token })
+
+            const cart_id = await TuringAPI.getCartId();
+            let cart = await TuringAPI.addItemToCart({
+                cart_id,
+                product_id: 2,
+                attributes: [],
+            });
+
+            cart = await TuringAPI.addItemToCart({
+                cart_id,
+                product_id: 4,
+                attributes: [],
+            });
+            // const taxes = await TuringAPI.getAllTaxes();
+            // const regions = await TuringAPI.getAllShippingRegions();
+            // const shipping = await TuringAPI.getShippingOptionsByRegionId({
+            //     shipping_region_id: 3,
+            // });
+
+            const customer = await TuringAPI.getCustomer();
+
+            // console.log({ taxes, regions, shipping });
+
+            const { orderId } = await TuringAPI.createOrder({
+                cart_id,
+                customer_id: customer.customer_id,
+                shipping_id: 1,
+                tax_id: 1,
+            });
+
+            const order = await TuringAPI.getShortDetailOrder({
+                order_id: orderId,
+            });
+            console.log(order);
+            const result = await TuringAPI.stripeCharge({
+                stripeToken: token.id,
+                order_id: orderId,
+                amount: parseFloat(order.total_amount) * 100,
+                description: `Ordered on ${order.created_on}`,
+            });
+
+            console.log(result);
         } catch (err) {
             console.error(err);
         }

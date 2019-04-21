@@ -13,6 +13,8 @@ import Routes from './routes';
 import history from './routes/history';
 import { loginWithFacebook } from './components/views/HomePage/duck/actions';
 import { KEY_TOKEN } from './api/config';
+import TuringAPI from './api';
+import { KEY_CART_ID } from './components/views/Cart/duck/types';
 
 const MainStyles = styled.div`
     .facebook-auto-login {
@@ -21,8 +23,59 @@ const MainStyles = styled.div`
 `;
 
 class App extends Component {
+    componentDidMount = async () => {
+        const { user } = this.props;
+        const cart_id = await TuringAPI.getCartId();
+
+        // const cart = await TuringAPI.addItemToCart({
+        //     cart_id,
+        //     product_id: 2,
+        //     attributes: [],
+        // });
+
+        // await TuringAPI.addItemToCart({
+        //     cart_id,
+        //     product_id: 4,
+        //     attributes: [],
+        // });
+        const cart = await TuringAPI.getCart();
+        console.log(cart);
+
+        // TuringAPI.updateItemInCart({
+        //     item_id: cart[1].item_id,
+        //     quantity: 5,
+        // });
+
+        // const taxes = await TuringAPI.getAllTaxes();
+        // const regions = await TuringAPI.getAllShippingRegions();
+        // const shipping = await TuringAPI.getShippingOptionsByRegionId({
+        //     shipping_region_id: 3,
+        // });
+
+        const customer = await TuringAPI.getCustomer();
+
+        // console.log({ taxes, regions, shipping });
+
+        const { orderId } = await TuringAPI.createOrder({
+            cart_id,
+            customer_id: customer.customer_id,
+            shipping_id: 1,
+            tax_id: 1,
+        });
+
+        // const order = await TuringAPI.getOrderById({
+        //     order_id: orderId,
+        // });
+
+        // const summary = await TuringAPI.getShortDetailOrder({
+        //     order_id: orderId,
+        // });
+        // order id 948
+
+        // console.log({ order, summary });
+    };
+
     handleFacebookLogin = ({ accessToken } = {}) => {
-        console.log('login int');
         this.props.onLoginWithFacebook({ accessToken });
     };
 
@@ -83,11 +136,15 @@ class App extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    user: state.main.user,
+});
+
 const mapDispatchToProps = {
     onLoginWithFacebook: loginWithFacebook,
 };
 
 export default connect(
-    undefined,
+    mapStateToProps,
     mapDispatchToProps,
 )(App);

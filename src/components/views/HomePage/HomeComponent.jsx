@@ -74,7 +74,7 @@ const HomeComponent = (props) => {
                 {cart.map((lineItem) => {
                     return (
                         <div>
-                            {lineItem.item.name} x {lineItem.amount}
+                            {lineItem.item.name} x {lineItem.quantity}
                         </div>
                     );
                 })}

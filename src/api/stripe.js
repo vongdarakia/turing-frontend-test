@@ -1,5 +1,6 @@
 import { getBasicHeaders, getAuthHeaders, apiUrl } from './config';
 import prepareRequestParams from '../utils/prepare-request-params';
+import prepareRequestBody from '../utils/prepare-request-body';
 
 export default {
     stripeCharge: async ({
@@ -10,19 +11,17 @@ export default {
         currency,
     } = {}) => {
         try {
-            const response = await fetch(
-                `${apiUrl}/stripe${prepareRequestParams({
+            const response = await fetch(`${apiUrl}/stripe/charge`, {
+                method: 'post',
+                headers: getBasicHeaders(),
+                body: prepareRequestBody({
                     stripeToken,
                     order_id,
                     description,
                     amount,
                     currency,
-                })}`,
-                {
-                    method: 'post',
-                    headers: getBasicHeaders(),
-                },
-            );
+                }),
+            });
 
             const result = await response.json();
             console.log({ result });
