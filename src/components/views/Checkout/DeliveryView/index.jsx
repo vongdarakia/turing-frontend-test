@@ -18,13 +18,16 @@ import ViewFooter from '../../../common/ViewFooter';
 class DeliverView extends Component {
     constructor(props) {
         super(props);
+
+        const { goToPrevousStage } = props;
+
         this.state = {
             shippingOptions: [],
             btnPropsPrimary: {
                 onClick: this.handleGoNext,
             },
             btnPropsSecondary: {
-                onClick: this.handleGoBack,
+                onClick: goToPrevousStage,
             },
         };
     }
@@ -42,6 +45,7 @@ class DeliverView extends Component {
         const { user } = nextProps;
 
         if (user) {
+            console.log({ user });
             const {
                 firstName,
                 lastName,
@@ -132,7 +136,15 @@ class DeliverView extends Component {
     };
 
     handleGoNext = async () => {
-        const { address, city, state, zipCode, country, user } = this.props;
+        const {
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+            user,
+            goToNextStage,
+        } = this.props;
 
         const response = await TuringAPI.updateCustomerAddress({
             address_1: address,
@@ -143,6 +155,7 @@ class DeliverView extends Component {
             shipping_region_id: user.shipping_region_id,
         });
 
+        goToNextStage();
         console.log(response);
     };
 
@@ -215,6 +228,8 @@ DeliverView.propTypes = {
     changeZipCode: PropTypes.func.isRequired,
     changeState: PropTypes.func.isRequired,
     changeShippingOptionId: PropTypes.func.isRequired,
+    goToNextStage: PropTypes.func.isRequired,
+    goToPrevousStage: PropTypes.func.isRequired,
     user: PropTypes.shape({
         country: PropTypes.string,
         region: PropTypes.string,

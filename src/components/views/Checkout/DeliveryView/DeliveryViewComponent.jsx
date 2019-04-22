@@ -10,6 +10,15 @@ import FormControl from '@material-ui/core/FormControl';
 import FormInputGroup from '../../../common/form/FormInputGroup';
 
 const Wrapper = styled.div`
+    padding: 0 18px;
+
+    hr {
+        border: none;
+        margin-top: 48px;
+        margin-bottom: 16px;
+        height: 2px;
+        background-color: #e4e4e4;
+    }
     .form-address {
         display: flex;
         flex-direction: column;
@@ -146,6 +155,8 @@ const DeliveryViewComponent = (props) => {
                     />
                 </div>
             </div>
+
+            <hr />
 
             <div className="delivery-options-section">
                 <h2>Delivery options</h2>

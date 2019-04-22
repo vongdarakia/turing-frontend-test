@@ -19,7 +19,7 @@ class ConfirmationView extends Component {
     constructor(props) {
         super(props);
 
-        const { cart } = props;
+        const { cart, goToPreviousStage, goToNextStage } = props;
         let subtotal = 0;
 
         cart.forEach((lineItem) => {
@@ -28,12 +28,12 @@ class ConfirmationView extends Component {
 
         this.state = {
             subtotal,
-            shippingOption: [],
+            shippingOption: {},
             btnPropsPrimary: {
-                onClick: this.handleGoNext,
+                onClick: goToNextStage,
             },
             btnPropsSecondary: {
-                onClick: this.handleGoBack,
+                onClick: goToPreviousStage,
             },
         };
     }
@@ -56,18 +56,12 @@ class ConfirmationView extends Component {
         this.setState({ shippingOption });
     };
 
-    handleGoNext = async () => {
-        console.log('going next');
-    };
-
-    handleGoBack = () => {};
-
     getGrandTotal = () => {
         const { shippingOption, subtotal } = this.state;
         let grandTotal = subtotal;
-
+        console.log({ shippingOption, subtotal });
         if (shippingOption) {
-            grandTotal += shippingOption.shipping_cost;
+            grandTotal += parseFloat(shippingOption.shipping_cost);
         }
 
         return grandTotal;
@@ -122,6 +116,8 @@ ConfirmationView.propTypes = {
     zipCode: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
     shippingOptionId: PropTypes.number.isRequired,
+    goToPreviousStage: PropTypes.func.isRequired,
+    goToNextStage: PropTypes.func.isRequired,
     user: PropTypes.shape({
         country: PropTypes.string,
         region: PropTypes.string,
@@ -151,7 +147,7 @@ const mapStateToProps = (state) => ({
     country: state.checkout.country,
     shippingOptionId: state.checkout.shippingOptionId,
     user: state.main.user,
-    cart: state.cart,
+    cart: Object.keys(state.cart).map((key) => state.cart[key]),
 });
 
 const mapDispatchToProps = {

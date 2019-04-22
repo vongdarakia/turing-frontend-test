@@ -16,6 +16,7 @@ import { KEY_TOKEN } from './api/config';
 import TuringAPI from './api';
 import { KEY_CART_ID } from './components/views/Cart/duck/types';
 import DeliveryView from './components/views/Checkout/DeliveryView';
+import Checkout from './components/views/Checkout';
 
 const MainStyles = styled.div`
     font-family: 'Open Sans', sans-serif;
@@ -130,7 +131,7 @@ class App extends Component {
                 <Router history={history}>
                     <Routes />
                 </Router>
-                <DeliveryView />
+                <Checkout />
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     {this.props.cart.map((lineItem) => {

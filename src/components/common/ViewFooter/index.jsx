@@ -7,8 +7,12 @@ import Button from '../Button';
 const Wrapper = styled.div`
     background-color: #efefef;
     padding: 24px 0;
-    display: flex;
-    justify-content: space-between;
+
+    .view-footer-btn-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 18px;
+    }
 `;
 
 const ViewFooter = (props) => {
@@ -24,12 +28,14 @@ const ViewFooter = (props) => {
 
     return (
         <Wrapper className={`view-footer ${className || ''}`}>
-            <Button {...btnPropsSecondary} className={btnClassSecondary}>
-                {labelSecondary}
-            </Button>
-            <Button {...btnPropsPrimary} className={btnClassPrimary}>
-                {labelPrimary}
-            </Button>
+            <div className="view-footer-btn-container">
+                <Button {...btnPropsSecondary} className={btnClassSecondary}>
+                    {labelSecondary}
+                </Button>
+                <Button {...btnPropsPrimary} className={btnClassPrimary}>
+                    {labelPrimary}
+                </Button>
+            </div>
         </Wrapper>
     );
 };

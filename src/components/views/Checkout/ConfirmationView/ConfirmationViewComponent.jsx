@@ -104,6 +104,8 @@ const Wrapper = styled.div`
     }
 
     .row-cost {
+        margin-bottom: 24px;
+
         .row-item-header {
             padding: 6px 18px;
         }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectStripe, CardElement } from 'react-stripe-elements';
-import TuringAPI from '../../../api';
+import TuringAPI from '../../../../api';
 
 const stripeCardStyle = {
     // display: 'flex',

@@ -34,7 +34,7 @@ const HomeComponent = (props) => {
     return (
         <div>
             <header className="App-header">
-                {/* {user && (
+                {user && (
                     <div>
                         <div>Hello {user.name}</div>
                         <button type="button" onClick={onLogOut}>
@@ -55,7 +55,7 @@ const HomeComponent = (props) => {
                         onLoginWithFacebook={onLoginWithFacebook}
                     />
                 </Modal>
-                <Checkout />
+                {/* <Checkout /> */}
                 <div>
                     <button type="button" onClick={onOpenRegisterModal}>
                         Register
@@ -64,7 +64,7 @@ const HomeComponent = (props) => {
                         Login
                     </button>
                 </div>
-
+                {/* 
                 <CategoryList />
 
                 <DepartmentList />

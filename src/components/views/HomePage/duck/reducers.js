@@ -16,6 +16,12 @@ const main = {
 export default (state = main, { type, payload } = {}) => {
     switch (type) {
         case STORE_USER:
+            if (payload.user && payload.user.error) {
+                return {
+                    ...state,
+                    user: null,
+                };
+            }
             return {
                 ...state,
                 user: { ...payload.user },

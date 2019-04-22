@@ -19,7 +19,7 @@ const Wrapper = styled.div`
         display: block;
         width: 100%;
         margin-top: 4px;
-        color: #b7b7b7;
+        color: #6c6c6c;
 
         input {
             font-family: 'Open Sans', sans-serif;
