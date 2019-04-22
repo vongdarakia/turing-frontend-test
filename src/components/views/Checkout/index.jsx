@@ -7,6 +7,7 @@ import DeliveryView from './DeliveryView';
 import ConfirmationView from './ConfirmationView';
 import PaymentView from './PaymentView';
 import SuccessView from './SuccessView';
+import Cart from '../Cart';
 
 const Wrapper = styled.div`
     .checkout-view,
@@ -42,11 +43,26 @@ class Checkout extends Component {
         this.setState({ stage: prevStage });
     };
 
+    handlePaymentFailure = (error) => {
+        console.error(error);
+    };
+
+    renderCartView = () => {
+        const { onCloseModal } = this.props;
+
+        return (
+            <Cart
+                onClickBackToShop={onCloseModal}
+                onClickNext={this.goToNextStage}
+            />
+        );
+    };
+
     renderDeliveryView = () => {
         return (
             <DeliveryView
-                goToNextStage={this.goToNextStage}
-                goToPreviousStage={this.goToPreviousStage}
+                onClickNext={this.goToNextStage}
+                onClickBack={this.goToPreviousStage}
             />
         );
     };
@@ -54,8 +70,8 @@ class Checkout extends Component {
     renderConfirmationView = () => {
         return (
             <ConfirmationView
-                goToNextStage={this.goToNextStage}
-                goToPreviousStage={this.goToPreviousStage}
+                onClickPay={this.goToNextStage}
+                onClickBack={this.goToPreviousStage}
             />
         );
     };
@@ -65,8 +81,9 @@ class Checkout extends Component {
             <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
                 <Elements>
                     <PaymentView
-                        goToNextStage={this.goToNextStage}
-                        goToPreviousStage={this.goToPreviousStage}
+                        onFailure={this.handlePaymentFailure}
+                        onSuccess={this.goToNextStage}
+                        onClickBack={this.goToPreviousStage}
                     />
                 </Elements>
             </StripeProvider>
@@ -76,23 +93,26 @@ class Checkout extends Component {
     renderSuccessView = () => {
         const { onCloseModal } = this.props;
 
-        return <SuccessView onCloseModal={onCloseModal} />;
+        return <SuccessView onClickBackToShop={onCloseModal} />;
     };
 
     getView = () => {
         const { stage } = this.state;
 
         if (stage === 1) {
-            return this.renderConfirmationView();
+            return this.renderDeliveryView();
         }
         if (stage === 2) {
-            return this.renderPaymentView();
+            return this.renderConfirmationView();
         }
         if (stage === 3) {
+            return this.renderPaymentView();
+        }
+        if (stage === 4) {
             return this.renderSuccessView();
         }
 
-        return this.renderDeliveryView();
+        return this.renderCartView();
     };
 
     render() {

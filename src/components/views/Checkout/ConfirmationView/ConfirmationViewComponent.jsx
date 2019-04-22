@@ -152,7 +152,7 @@ const ConfirmationViewComponent = (props) => {
                                     {lineItem.quantity}
                                 </div>
                                 <div className="col-line-item col-price col-price-value">
-                                    {`$${lineItem.sub_total}`}
+                                    {`$${lineItem.subtotal}`}
                                 </div>
                             </div>
                         ))}

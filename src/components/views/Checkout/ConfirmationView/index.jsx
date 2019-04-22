@@ -14,26 +14,27 @@ import {
 } from '../duck/actions';
 import TuringAPI from '../../../../api';
 import ViewFooter from '../../../common/ViewFooter';
+import getCartLineItemsFromTable from '../../../../utils/get-cart-line-items';
 
 class ConfirmationView extends Component {
     constructor(props) {
         super(props);
 
-        const { cart, goToPreviousStage, goToNextStage } = props;
+        const { cart, onClickBack, onClickPay } = props;
         let subtotal = 0;
 
         cart.forEach((lineItem) => {
-            subtotal += lineItem.subtotal;
+            subtotal += parseFloat(lineItem.subtotal);
         });
 
         this.state = {
-            subtotal,
+            subtotal: subtotal.toFixed(2),
             shippingOption: {},
             btnPropsPrimary: {
-                onClick: goToNextStage,
+                onClick: onClickPay,
             },
             btnPropsSecondary: {
-                onClick: goToPreviousStage,
+                onClick: onClickBack,
             },
         };
     }
@@ -59,12 +60,13 @@ class ConfirmationView extends Component {
     getGrandTotal = () => {
         const { shippingOption, subtotal } = this.state;
         let grandTotal = subtotal;
-        console.log({ shippingOption, subtotal });
+
         if (shippingOption) {
-            grandTotal += parseFloat(shippingOption.shipping_cost);
+            grandTotal =
+                parseFloat(subtotal) + parseFloat(shippingOption.shipping_cost);
         }
 
-        return grandTotal;
+        return grandTotal.toFixed(2);
     };
 
     render() {
@@ -98,7 +100,7 @@ class ConfirmationView extends Component {
                     grandTotal={this.getGrandTotal()}
                 />
                 <ViewFooter
-                    labelPrimary="Next Step"
+                    labelPrimary="Pay"
                     labelSecondary="Back"
                     btnPropsPrimary={btnPropsPrimary}
                     btnPropsSecondary={btnPropsSecondary}
@@ -116,8 +118,8 @@ ConfirmationView.propTypes = {
     zipCode: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
     shippingOptionId: PropTypes.number.isRequired,
-    goToPreviousStage: PropTypes.func.isRequired,
-    goToNextStage: PropTypes.func.isRequired,
+    onClickBack: PropTypes.func.isRequired,
+    onClickPay: PropTypes.func.isRequired,
     user: PropTypes.shape({
         country: PropTypes.string,
         region: PropTypes.string,
@@ -147,7 +149,7 @@ const mapStateToProps = (state) => ({
     country: state.checkout.country,
     shippingOptionId: state.checkout.shippingOptionId,
     user: state.main.user,
-    cart: Object.keys(state.cart).map((key) => state.cart[key]),
+    cart: getCartLineItemsFromTable(state.cart),
 });
 
 const mapDispatchToProps = {

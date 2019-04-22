@@ -8,6 +8,7 @@ import './App.css';
 import {
     incrementItemInCart,
     decrementItemInCart,
+    storeCart,
 } from './components/views/Cart/duck/actions';
 import Routes from './routes';
 import history from './routes/history';
@@ -21,7 +22,7 @@ import MainStyles from './styles/MainStyle';
 
 class App extends Component {
     componentDidMount = async () => {
-        const { user } = this.props;
+        const { user, saveCart } = this.props;
         const cart_id = await TuringAPI.getCartId();
 
         // const cart = await TuringAPI.addItemToCart({
@@ -30,13 +31,18 @@ class App extends Component {
         //     attributes: [],
         // });
 
-        // await TuringAPI.addItemToCart({
-        //     cart_id,
-        //     product_id: 4,
-        //     attributes: [],
-        // });
+        await TuringAPI.addItemToCart({
+            cart_id,
+            product_id: 1,
+            attributes: [],
+        });
+
+        const product = await TuringAPI.getProductDetails({ product_id: 1 });
         const cart = await TuringAPI.getCart();
-        console.log(cart);
+
+        saveCart(cart);
+
+        console.log({ cart, product });
 
         // TuringAPI.updateItemInCart({
         //     item_id: cart[1].item_id,
@@ -53,12 +59,12 @@ class App extends Component {
 
         console.log({ regions, shipping });
 
-        const { orderId } = await TuringAPI.createOrder({
-            cart_id,
-            customer_id: customer.customer_id,
-            shipping_id: 1,
-            tax_id: 1,
-        });
+        // const { orderId } = await TuringAPI.createOrder({
+        //     cart_id,
+        //     customer_id: customer.customer_id,
+        //     shipping_id: 1,
+        //     tax_id: 1,
+        // });
 
         // const order = await TuringAPI.getOrderById({
         //     order_id: orderId,
@@ -140,6 +146,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     onLoginWithFacebook: loginWithFacebook,
+    saveCart: storeCart,
 };
 
 export default connect(

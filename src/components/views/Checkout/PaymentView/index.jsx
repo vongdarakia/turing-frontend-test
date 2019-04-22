@@ -11,7 +11,7 @@ class PaymentView extends Component {
     constructor(props) {
         super(props);
 
-        const { goToPreviousStage } = props;
+        const { onClickBack } = props;
 
         this.state = {
             shippingOptions: [],
@@ -19,14 +19,14 @@ class PaymentView extends Component {
                 onClick: this.handleCheckout,
             },
             btnPropsSecondary: {
-                onClick: goToPreviousStage,
+                onClick: onClickBack,
             },
         };
     }
 
     handleCheckout = async (e) => {
         e.preventDefault();
-        const { stripe, user } = this.props;
+        const { stripe, user, onSuccess, onFailure } = this.props;
 
         try {
             const { token, error } = await stripe.createToken({
@@ -79,6 +79,11 @@ class PaymentView extends Component {
                 description: `Ordered on ${order.created_on}`,
             });
 
+            if (result.error) {
+                onFailure(result.error);
+            } else {
+                onSuccess();
+            }
             console.log(result);
         } catch (err) {
             console.error(err);

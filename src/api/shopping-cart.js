@@ -1,7 +1,6 @@
 import { getBasicHeaders, apiUrl } from './config';
 import prepareRequestBody from '../utils/prepare-request-body';
 import { KEY_CART_ID } from '../components/views/Cart/duck/types';
-import prepareRequestParams from '../utils/prepare-request-params';
 
 const generateCartId = async () => {
     try {
@@ -14,7 +13,7 @@ const generateCartId = async () => {
         );
 
         const { cart_id } = await response.json();
-        console.log('cart_id', { cart_id });
+
         return { cart_id };
     } catch (error) {
         return { error };
@@ -35,7 +34,6 @@ const addItemToCart = async ({ cart_id, product_id, attributes = [] }) => {
         const lineItems = response.json();
         return lineItems;
     } catch (error) {
-        console.log(error);
         return { error };
     }
 };
@@ -89,7 +87,6 @@ const emptyCart = async ({ cart_id } = {}) => {
                 headers: getBasicHeaders(),
             },
         );
-        console.log(response);
         const result = await response.json();
         return result;
     } catch (error) {
@@ -114,7 +111,6 @@ const updateItemInCart = async ({ item_id, cart_id, quantity }) => {
         const lineItems = await response.json();
         return lineItems;
     } catch (error) {
-        console.log();
         return { error };
     }
 };
@@ -128,8 +124,7 @@ const removeItemFromCart = async ({ item_id } = {}) => {
                 headers: getBasicHeaders(),
             },
         );
-        console.log(response);
-        return response.json();
+        return response.status === 200;
     } catch (error) {
         return { error };
     }

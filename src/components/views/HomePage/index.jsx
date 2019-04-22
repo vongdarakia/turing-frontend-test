@@ -13,6 +13,7 @@ import {
 } from './duck/actions';
 import { KEY_TOKEN } from '../../../api/config';
 import TuringAPI from '../../../api';
+import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
 
 class HomePage extends Component {
     constructor(props) {
@@ -125,7 +126,7 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    cart: Object.keys(state.cart).map((key) => state.cart[key]),
+    cart: getCartLineItemsFromTable(state.cart),
     user: state.main.user,
 });
 

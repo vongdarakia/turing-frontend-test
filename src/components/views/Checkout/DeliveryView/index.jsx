@@ -19,7 +19,7 @@ class DeliverView extends Component {
     constructor(props) {
         super(props);
 
-        const { goToPrevousStage } = props;
+        const { onClickBack } = props;
 
         this.state = {
             shippingOptions: [],
@@ -27,7 +27,7 @@ class DeliverView extends Component {
                 onClick: this.handleGoNext,
             },
             btnPropsSecondary: {
-                onClick: goToPrevousStage,
+                onClick: onClickBack,
             },
         };
     }
@@ -47,12 +47,14 @@ class DeliverView extends Component {
         if (user) {
             console.log({ user });
             const {
-                firstName,
-                lastName,
-                address,
-                city,
-                state,
-                zipCode,
+                addressForm: {
+                    firstName,
+                    lastName,
+                    address,
+                    city,
+                    state,
+                    zipCode,
+                } = {},
                 changeFirstName,
                 changeLastName,
                 changeAddress,
@@ -143,7 +145,7 @@ class DeliverView extends Component {
             zipCode,
             country,
             user,
-            goToNextStage,
+            onClickNext,
         } = this.props;
 
         const response = await TuringAPI.updateCustomerAddress({
@@ -155,7 +157,7 @@ class DeliverView extends Component {
             shipping_region_id: user.shipping_region_id,
         });
 
-        goToNextStage();
+        onClickNext();
         console.log(response);
     };
 
@@ -228,8 +230,8 @@ DeliverView.propTypes = {
     changeZipCode: PropTypes.func.isRequired,
     changeState: PropTypes.func.isRequired,
     changeShippingOptionId: PropTypes.func.isRequired,
-    goToNextStage: PropTypes.func.isRequired,
-    goToPrevousStage: PropTypes.func.isRequired,
+    onClickNext: PropTypes.func.isRequired,
+    onClickBack: PropTypes.func.isRequired,
     user: PropTypes.shape({
         country: PropTypes.string,
         region: PropTypes.string,
@@ -242,16 +244,17 @@ DeliverView.defaultProps = {
     user: undefined,
 };
 
-const mapStateToProps = (state) => ({
-    firstName: state.checkout.firstName,
-    lastName: state.checkout.lastName,
-    address: state.checkout.address,
-    city: state.checkout.city,
-    state: state.checkout.state,
-    zipCode: state.checkout.zipCode,
-    country: state.checkout.country,
-    shippingOptionId: state.checkout.shippingOptionId,
-    user: state.main.user,
+const mapStateToProps = ({ checkout, main: { user } }) => ({
+    firstName: checkout.firstName || user.name.split(' ')[0],
+    lastName: checkout.lastName || user.name.split(' ')[1],
+    address: checkout.address || user.address_1,
+    city: checkout.city || user.city,
+    state: checkout.state || user.region,
+    zipCode: checkout.zipCode || user.postal_code,
+    country: checkout.country || user.country,
+    shippingOptionId: checkout.shippingOptionId,
+    addressForm: checkout,
+    user,
 });
 
 const mapDispatchToProps = {

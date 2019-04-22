@@ -2,25 +2,16 @@ import {
     INCREMENT_ITEM_IN_CART,
     DECREMENT_ITEM_IN_CART,
     UPDATE_ITEM_AMOUNT_IN_CART,
-    ADD_ITEMS_TO_CART,
-    KEY_CART_ID,
     STORE_CART,
+    REMOVE_ITEM_FROM_CART,
 } from './types';
 import TuringAPI from '../../../../api';
+
+let timeout;
 
 export const storeCart = (cart) => ({
     type: STORE_CART,
     payload: { cart },
-});
-
-export const incrementItemInCart = ({ item_id }) => ({
-    type: INCREMENT_ITEM_IN_CART,
-    payload: { item_id },
-});
-
-export const decrementItemInCart = ({ item_id }) => ({
-    type: DECREMENT_ITEM_IN_CART,
-    payload: { item_id },
 });
 
 export const addItemsToCart = ({ cart_id, product_id, attributes }) => async (
@@ -38,13 +29,13 @@ export const addItemsToCart = ({ cart_id, product_id, attributes }) => async (
 
 export const saveCart = () => async (dispatch, getState) => {
     const { cart } = getState();
-    const item_ids = Object.keys(cart);
+    const itemNames = Object.keys(cart);
     const results = [];
 
     try {
-        for (let index = 0; index < item_ids.length; index += 1) {
-            const item_id = item_ids[index];
-            const { quantity } = cart[item_id];
+        for (let index = 0; index < itemNames.length; index += 1) {
+            const name = itemNames[index];
+            const { quantity, item_id } = cart[name];
 
             results.push(TuringAPI.updateItemInCart({ item_id, quantity }));
         }
@@ -53,15 +44,57 @@ export const saveCart = () => async (dispatch, getState) => {
         const updatedCart = await TuringAPI.getCart();
 
         dispatch(storeCart(updatedCart));
+
+        return updatedCart;
     } catch (error) {
-        console.error(error);
+        return { error };
     }
 };
 
-export const updateItemInCart = (item, amount) => ({
+export const incrementItemInCart = (name) => async (dispatch) => {
+    clearTimeout(timeout);
+
+    dispatch({
+        type: INCREMENT_ITEM_IN_CART,
+        payload: { name },
+    });
+
+    timeout = setTimeout(() => dispatch(saveCart()), 3000);
+};
+
+export const decrementItemInCart = (name) => async (dispatch) => {
+    clearTimeout(timeout);
+
+    dispatch({
+        type: DECREMENT_ITEM_IN_CART,
+        payload: { name },
+    });
+
+    timeout = setTimeout(() => dispatch(saveCart()), 3000);
+};
+
+export const removeItemFromCart = (name) => async (dispatch, getState) => {
+    const { cart } = getState();
+    if (cart[name]) {
+        dispatch({
+            type: REMOVE_ITEM_FROM_CART,
+            payload: { name },
+        });
+
+        const success = await TuringAPI.removeItemFromCart({
+            item_id: cart[name].item_id,
+        });
+
+        if (success) {
+            dispatch(saveCart());
+        }
+    }
+};
+
+export const updateItemInCart = ({ name, amount }) => ({
     type: UPDATE_ITEM_AMOUNT_IN_CART,
     payload: {
-        item,
+        name,
         amount,
     },
 });

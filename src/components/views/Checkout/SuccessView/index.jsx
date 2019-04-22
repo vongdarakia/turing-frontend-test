@@ -5,9 +5,9 @@ import SuccessViewComponent from './SuccessViewComponent';
 
 class SuccessView extends Component {
     handleGoBackToShop = () => {
-        const { onCloseModal } = this.props;
+        const { onClickBackToShop } = this.props;
 
-        onCloseModal();
+        onClickBackToShop();
     };
 
     render() {
@@ -25,7 +25,7 @@ class SuccessView extends Component {
 
 SuccessView.propTypes = {
     className: PropTypes.string,
-    onCloseModal: PropTypes.func.isRequired,
+    onClickBackToShop: PropTypes.func.isRequired,
 };
 
 SuccessView.defaultProps = {

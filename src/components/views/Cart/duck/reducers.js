@@ -2,94 +2,81 @@ import {
     INCREMENT_ITEM_IN_CART,
     DECREMENT_ITEM_IN_CART,
     UPDATE_ITEM_AMOUNT_IN_CART,
-    ADD_ITEMS_TO_CART,
     STORE_CART,
     CLEAR_CART,
+    REMOVE_ITEM_FROM_CART,
 } from './types';
 
 const lineItemTable = {};
 
 export default (state = lineItemTable, { type, payload } = {}) => {
-    const newCart = {};
+    let newCart = {};
 
     switch (type) {
         case INCREMENT_ITEM_IN_CART:
-            if (!state[payload.item_id]) {
+            if (!state[payload.name]) {
                 return {
                     ...state,
-                    [payload.item_id]: {
-                        ...state[payload.item_id],
+                    [payload.name]: {
+                        ...state[payload.name],
                         quantity: 1,
                     },
                 };
             }
             return {
                 ...state,
-                [payload.item_id]: {
-                    ...state[payload.item_id],
-                    quantity: state[payload.item_id].quantity + 1,
+                [payload.name]: {
+                    ...state[payload.name],
+                    quantity: state[payload.name].quantity + 1,
                 },
             };
         case DECREMENT_ITEM_IN_CART:
-            if (state[payload.item_id]) {
-                if (state[payload.item_id].quantity === 0) {
+            if (state[payload.name]) {
+                if (state[payload.name].quantity === 0) {
                     return state;
                 }
-                let newQuantity = state[payload.item_id].quantity - 1;
+                let newQuantity = state[payload.name].quantity - 1;
                 if (newQuantity <= 0) {
                     newQuantity = 0;
                 }
                 return {
                     ...state,
-                    [payload.item_id]: {
-                        ...state[payload.item_id],
+                    [payload.name]: {
+                        ...state[payload.name],
                         quantity: newQuantity,
                     },
                 };
             }
             return state;
-        case ADD_ITEMS_TO_CART:
-            if (!state[payload.item.product_id]) {
-                return {
-                    ...state,
-                    [payload.item.product_id]: {
-                        item: payload.item,
-                        quantity: payload.quantity,
-                    },
-                };
-            }
-            return {
-                ...state,
-                [payload.item.product_id]: {
-                    item: payload.item,
-                    quantity:
-                        state[payload.item.product_id].quantity +
-                        payload.quantity,
-                },
-            };
         case UPDATE_ITEM_AMOUNT_IN_CART:
-            if (payload.quantity === state[payload.item.product_id].quantity) {
+            if (payload.quantity === state[payload.item.name].quantity) {
                 return state;
             }
             if (payload.quantity >= 0) {
                 return {
                     ...state,
-                    [payload.item.product_id]: {
-                        item: payload.item,
+                    [payload.item.name]: {
+                        ...state[payload.item.name],
                         quantity: payload.quantity,
                     },
                 };
             }
             return {
                 ...state,
-                [payload.item.product_id]: {
-                    item: payload.item,
+                [payload.item.name]: {
+                    ...state[payload.item.name],
                     quantity: 0,
                 },
             };
+        case REMOVE_ITEM_FROM_CART:
+            newCart = { ...state };
+
+            delete newCart[payload.name];
+            return newCart;
         case STORE_CART:
+            console.log('store', payload.cart);
             payload.cart.forEach((lineItem) => {
-                newCart[lineItem.item_id] = lineItem;
+                newCart[lineItem.name] = lineItem;
             });
             return newCart;
 
