@@ -70,7 +70,7 @@ const DeliveryViewComponent = (props) => {
     } = props;
 
     return (
-        <Wrapper className="checkout-view">
+        <Wrapper id="delivery-view" className="checkout-view">
             <div className="form-address">
                 <div className="form-row">
                     <div className="form-col col-left">
@@ -148,7 +148,7 @@ const DeliveryViewComponent = (props) => {
             </div>
 
             <div className="delivery-options-section">
-                <h2>Delivery Options</h2>
+                <h2>Delivery options</h2>
 
                 {shippingOptions.length > 0 && (
                     <FormControl
