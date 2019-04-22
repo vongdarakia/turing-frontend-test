@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '@material-ui/core/Modal';
+// import Modal from '@material-ui/core/Modal';
 
 import RegisterComponent from '../Register/RegisterComponent';
 import LoginComponent from '../Login/LoginComponent';
@@ -9,6 +9,7 @@ import ProductListContainer from './ProductList';
 import CategoryList from './CategoryList';
 import DepartmentList from './DepartmentList';
 import Checkout from '../Checkout';
+import Modal from '../../common/Modal';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -29,6 +30,9 @@ const HomeComponent = (props) => {
         products,
         totalProducts,
         user,
+        onCloseCheckoutModal,
+        isCheckoutModalOpen,
+        onOpenCheckoutModal,
     } = props;
 
     return (
@@ -55,7 +59,17 @@ const HomeComponent = (props) => {
                         onLoginWithFacebook={onLoginWithFacebook}
                     />
                 </Modal>
-                {/* <Checkout /> */}
+
+                <Modal
+                    open={isCheckoutModalOpen}
+                    onClose={onCloseCheckoutModal}
+                >
+                    <Checkout onCloseModal={onCloseCheckoutModal} />
+                </Modal>
+
+                <button type="button" onClick={onOpenCheckoutModal}>
+                    Checkout
+                </button>
                 <div>
                     <button type="button" onClick={onOpenRegisterModal}>
                         Register

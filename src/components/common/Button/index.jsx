@@ -28,4 +28,10 @@ export default styled(MaterialButton)`
         background-color: ${SECONDARY_COLOR};
         color: ${PRIMARY_COLOR};
     }
+
+    &.btn-large {
+        padding: 16px 48px !important;
+        border-radius: 48px !important;
+        min-width: 160px !important;
+    }
 `;

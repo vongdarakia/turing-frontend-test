@@ -17,41 +17,7 @@ import TuringAPI from './api';
 import { KEY_CART_ID } from './components/views/Cart/duck/types';
 import DeliveryView from './components/views/Checkout/DeliveryView';
 import Checkout from './components/views/Checkout';
-
-const MainStyles = styled.div`
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    color: #6c6c6c;
-
-    small {
-        font-size: 12px;
-    }
-
-    h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 24px;
-        color: #2e2e2e;
-        line-height: 150%;
-    }
-
-    h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
-        color: #2e2e2e;
-        line-height: 150%;
-    }
-
-    .topbar {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 15px;
-        color: #2e2e2e;
-        line-height: 240%;
-    }
-
-    .facebook-auto-login {
-        display: none;
-    }
-`;
+import MainStyles from './styles/MainStyle';
 
 class App extends Component {
     componentDidMount = async () => {
@@ -131,7 +97,7 @@ class App extends Component {
                 <Router history={history}>
                     <Routes />
                 </Router>
-                <Checkout />
+                {/* <Checkout /> */}
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     {this.props.cart.map((lineItem) => {

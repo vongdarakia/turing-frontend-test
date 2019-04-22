@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import DeliveryView from './DeliveryView';
 import ConfirmationView from './ConfirmationView';
+import PaymentView from './PaymentView';
+import SuccessView from './SuccessView';
+
+const Wrapper = styled.div`
+    .checkout-view,
+    .view-footer-btn-container {
+        max-width: 680px;
+        margin: auto;
+    }
+`;
 
 class Checkout extends Component {
     constructor(props) {
@@ -47,11 +60,26 @@ class Checkout extends Component {
         );
     };
 
-    renderPaymentView = () => {};
+    renderPaymentView = () => {
+        return (
+            <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
+                <Elements>
+                    <PaymentView
+                        goToNextStage={this.goToNextStage}
+                        goToPreviousStage={this.goToPreviousStage}
+                    />
+                </Elements>
+            </StripeProvider>
+        );
+    };
 
-    renderSuccessView = () => {};
+    renderSuccessView = () => {
+        const { onCloseModal } = this.props;
 
-    render() {
+        return <SuccessView onCloseModal={onCloseModal} />;
+    };
+
+    getView = () => {
         const { stage } = this.state;
 
         if (stage === 1) {
@@ -65,7 +93,15 @@ class Checkout extends Component {
         }
 
         return this.renderDeliveryView();
+    };
+
+    render() {
+        return <Wrapper id="checkout-modal-view">{this.getView()}</Wrapper>;
     }
 }
+
+Checkout.propTypes = {
+    onCloseModal: PropTypes.func.isRequired,
+};
 
 export default Checkout;

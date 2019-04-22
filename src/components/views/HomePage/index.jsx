@@ -21,6 +21,7 @@ class HomePage extends Component {
         this.state = {
             isRegisterModalOpen: false,
             isLoginModalOpen: false,
+            isCheckoutModalOpen: false,
         };
     }
 
@@ -57,6 +58,18 @@ class HomePage extends Component {
         });
     };
 
+    openCheckoutModal = () => {
+        this.setState({
+            isCheckoutModalOpen: true,
+        });
+    };
+
+    closeCheckoutModal = () => {
+        this.setState({
+            isCheckoutModalOpen: false,
+        });
+    };
+
     handleRegister = async ({ name, email, password }) => {
         const { onRegister } = this.props;
         const response = await onRegister({ name, email, password });
@@ -85,7 +98,11 @@ class HomePage extends Component {
     };
 
     render() {
-        const { isRegisterModalOpen, isLoginModalOpen } = this.state;
+        const {
+            isRegisterModalOpen,
+            isLoginModalOpen,
+            isCheckoutModalOpen,
+        } = this.state;
 
         return (
             <HomeComponent
@@ -99,6 +116,9 @@ class HomePage extends Component {
                 isLoginModalOpen={isLoginModalOpen}
                 onCloseLoginModal={this.closeLoginModal}
                 onOpenLoginModal={this.openLoginModal}
+                isCheckoutModalOpen={isCheckoutModalOpen}
+                onCloseCheckoutModal={this.closeCheckoutModal}
+                onOpenCheckoutModal={this.openCheckoutModal}
             />
         );
     }

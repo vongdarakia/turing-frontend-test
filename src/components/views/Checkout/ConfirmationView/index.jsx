@@ -133,7 +133,7 @@ ConfirmationView.propTypes = {
 };
 
 ConfirmationView.defaultProps = {
-    className: '',
+    className: undefined,
     user: undefined,
 };
 

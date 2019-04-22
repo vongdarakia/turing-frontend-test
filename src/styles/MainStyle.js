@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { PRIMARY_FONT_FAMILY, SECONDARY_FONT_FAMILY } from './settings';
+import {
+    PRIMARY_FONT_FAMILY,
+    SECONDARY_FONT_FAMILY,
+    TITLE_FONT_FAMILY,
+} from './settings';
 
 const MainStyles = styled.div`
     font-family: ${PRIMARY_FONT_FAMILY};
@@ -9,6 +13,13 @@ const MainStyles = styled.div`
 
     small {
         font-size: 12px;
+    }
+
+    h1 {
+        font-family: ${TITLE_FONT_FAMILY};
+        font-size: 48px;
+        color: #2e2e2e;
+        line-height: 150%;
     }
 
     h2 {
