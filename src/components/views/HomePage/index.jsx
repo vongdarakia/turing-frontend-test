@@ -80,24 +80,6 @@ class HomePage extends Component {
         }
     };
 
-    handleLogin = async ({ email, password }) => {
-        const { onLogin } = this.props;
-        const response = await onLogin({ email, password });
-
-        if (response.user) {
-            this.closeLoginModal();
-        }
-    };
-
-    handleLoginWithFacebook = async ({ accessToken }) => {
-        const { onLoginWithFacebook } = this.props;
-        const response = await onLoginWithFacebook({ accessToken });
-        console.log({ response });
-        if (response.customer) {
-            this.closeLoginModal();
-        }
-    };
-
     render() {
         const {
             isRegisterModalOpen,
@@ -112,8 +94,8 @@ class HomePage extends Component {
                 onRegister={this.handleRegister}
                 onOpenRegisterModal={this.openRegisterModal}
                 onCloseRegisterModal={this.closeRegisterModal}
-                onLogin={this.handleLogin}
-                onLoginWithFacebook={this.handleLoginWithFacebook}
+                onLogin={this.closeLoginModal}
+                onLoginWithFacebook={this.closeLoginModal}
                 isLoginModalOpen={isLoginModalOpen}
                 onCloseLoginModal={this.closeLoginModal}
                 onOpenLoginModal={this.openLoginModal}

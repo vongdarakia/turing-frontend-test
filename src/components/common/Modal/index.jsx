@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { default as MaterialModal } from '@material-ui/core/Modal';
+import MaterialModal from '@material-ui/core/Modal';
 import MainStyles from '../../../styles/MainStyle';
 
 const ModalStyle = styled(MainStyles)`
@@ -9,6 +9,7 @@ const ModalStyle = styled(MainStyles)`
     max-width: 760px;
     margin: auto;
     margin-top: 48px;
+    padding: 24px;
 `;
 
 const Modal = (props) => {

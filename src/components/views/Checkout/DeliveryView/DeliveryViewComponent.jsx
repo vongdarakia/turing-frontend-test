@@ -84,60 +84,72 @@ const DeliveryViewComponent = (props) => {
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
-                            id="first-name"
                             label="First name"
-                            name="firstName"
-                            value={firstName}
-                            onChange={onChangeFirstName}
+                            inputProps={{
+                                id: 'first-name',
+                                name: 'firstName',
+                                value: firstName,
+                                onChange: onChangeFirstName,
+                            }}
                         />
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
-                            id="last-name"
                             label="Last name"
-                            name="lastName"
-                            value={lastName}
-                            onChange={onChangeLastName}
+                            inputProps={{
+                                id: 'last-name',
+                                name: 'lastName',
+                                value: lastName,
+                                onChange: onChangeLastName,
+                            }}
                         />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
-                            id="address"
                             label="Address"
-                            name="address"
-                            value={address}
-                            onChange={onChangeAddress}
+                            inputProps={{
+                                id: 'address',
+                                name: 'address',
+                                value: address,
+                                onChange: onChangeAddress,
+                            }}
                         />
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
-                            id="city"
                             label="City"
-                            name="city"
-                            value={city}
-                            onChange={onChangeCity}
+                            inputProps={{
+                                id: 'city',
+                                name: 'city',
+                                value: city,
+                                onChange: onChangeCity,
+                            }}
                         />
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
-                            id="state"
                             label="State"
-                            name="state"
-                            value={state}
-                            onChange={onChangeState}
+                            inputProps={{
+                                id: 'state',
+                                name: 'state',
+                                value: state,
+                                onChange: onChangeState,
+                            }}
                         />
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
-                            id="zipCode"
                             label="ZIP code"
-                            name="zipCode"
-                            value={zipCode}
-                            onChange={onChangeZipCode}
+                            inputProps={{
+                                id: 'zipCode',
+                                name: 'zipCode',
+                                value: zipCode,
+                                onChange: onChangeZipCode,
+                            }}
                         />
                     </div>
                 </div>
@@ -146,12 +158,14 @@ const DeliveryViewComponent = (props) => {
             <div className="form-address">
                 <div className="form-col col-left">
                     <FormInputGroup
-                        id="country"
                         label="Country"
-                        name="country"
-                        value={country}
-                        onChange={onChangeCountry}
-                        disabled
+                        inputProps={{
+                            id: 'country',
+                            name: 'country',
+                            value: country,
+                            onChange: onChangeCountry,
+                            disabled: true,
+                        }}
                     />
                 </div>
             </div>

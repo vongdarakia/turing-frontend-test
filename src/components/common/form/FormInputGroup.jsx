@@ -30,43 +30,45 @@ const Wrapper = styled.div`
             border: 1px solid #ced4da;
             box-sizing: border-box;
             padding: 10px 26px 10px 12px;
+            height: fit-content;
         }
     }
 `;
 
 const FormInputGroup = (props) => {
-    const { id, name, value, onChange, label, disabled } = props;
+    const {
+        label,
+        inputProps: { id, className },
+        inputProps,
+    } = props;
 
     return (
         <Wrapper className="form-input-group">
-            <InputLabel className="form-label" htmlFor={id}>
-                {label}
-            </InputLabel>
+            {label && (
+                <InputLabel className="form-label" htmlFor={id}>
+                    {label}
+                </InputLabel>
+            )}
+
             <InputBase
-                id={id}
-                className="form-input"
-                name={name}
-                value={value}
-                onChange={onChange}
-                disabled={disabled}
+                {...inputProps}
+                className={`form-input ${className || ''}`}
             />
         </Wrapper>
     );
 };
 
 FormInputGroup.propTypes = {
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
+    inputProps: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        value: PropTypes.string,
+        placeholder: PropTypes.string,
+        type: PropTypes.string,
+        onChange: PropTypes.func,
+        disabled: PropTypes.bool,
+    }).isRequired,
     label: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-};
-
-FormInputGroup.defaultProps = {
-    value: undefined,
-    onChange: undefined,
-    disabled: false,
 };
 
 export default FormInputGroup;
