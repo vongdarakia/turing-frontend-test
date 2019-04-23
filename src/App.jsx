@@ -23,6 +23,7 @@ import { KEY_CART_ID } from './components/views/Cart/duck/types';
 import DeliveryView from './components/views/Checkout/DeliveryView';
 import Checkout from './components/views/Checkout';
 import MainStyles from './styles/MainStyle';
+import GlobalStyle from './styles/GlobalStyle';
 
 class App extends Component {
     componentDidMount = async () => {
@@ -32,7 +33,7 @@ class App extends Component {
             storeDepartments,
             storeCategories,
         } = this.props;
-        const cart_id = await TuringAPI.getCartId();
+        // const cart_id = await TuringAPI.getCartId();
 
         // const cart = await TuringAPI.addItemToCart({
         //     cart_id,
@@ -40,31 +41,31 @@ class App extends Component {
         //     attributes: [],
         // });
 
-        await TuringAPI.addItemToCart({
-            cart_id,
-            product_id: 1,
-            attributes: [],
-        });
-
-        const product = await TuringAPI.getProductDetails({ product_id: 1 });
-        const cart = await TuringAPI.getCart();
-
-        saveCart(cart);
-
-        console.log({ cart, product });
-
-        // TuringAPI.updateItemInCart({
-        //     item_id: cart[1].item_id,
-        //     quantity: 5,
+        // await TuringAPI.addItemToCart({
+        //     cart_id,
+        //     product_id: 1,
+        //     attributes: [],
         // });
 
-        // const taxes = await TuringAPI.getAllTaxes();
-        const regions = await TuringAPI.getAllShippingRegions();
-        const shipping = await TuringAPI.getShippingOptionsByRegionId({
-            shipping_region_id: 2,
-        });
+        // const product = await TuringAPI.getProductDetails({ product_id: 1 });
+        // const cart = await TuringAPI.getCart();
 
-        const customer = await TuringAPI.getCustomer();
+        // saveCart(cart);
+
+        // console.log({ cart, product });
+
+        // // TuringAPI.updateItemInCart({
+        // //     item_id: cart[1].item_id,
+        // //     quantity: 5,
+        // // });
+
+        // // const taxes = await TuringAPI.getAllTaxes();
+        // const regions = await TuringAPI.getAllShippingRegions();
+        // const shipping = await TuringAPI.getShippingOptionsByRegionId({
+        //     shipping_region_id: 2,
+        // });
+
+        // const customer = await TuringAPI.getCustomer();
 
         const departments = await TuringAPI.getAllDepartments();
         const { categories } = await TuringAPI.getAllCategories();
@@ -72,7 +73,7 @@ class App extends Component {
         storeDepartments(departments);
         storeCategories(categories);
 
-        console.log({ regions, shipping });
+        // console.log({ regions, shipping });
 
         // const { orderId } = await TuringAPI.createOrder({
         //     cart_id,
@@ -112,10 +113,10 @@ class App extends Component {
     };
 
     render() {
-        console.log(this.props);
         return (
             <MainStyles className="App">
                 <Router history={history}>
+                    <GlobalStyle />
                     <Routes />
                 </Router>
             </MainStyles>

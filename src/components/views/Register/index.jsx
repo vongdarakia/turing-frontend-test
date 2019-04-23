@@ -9,7 +9,7 @@ import {
     loginWithFacebook as loginWithFacebookAction,
 } from '../HomePage/duck/actions';
 
-class Login extends Component {
+class Register extends Component {
     handleRegister = async ({ name, email, password }) => {
         const { registerAccount, onRegister } = this.props;
         const response = await registerAccount({ name, email, password });
@@ -42,7 +42,7 @@ class Login extends Component {
     }
 }
 
-Login.propTypes = {
+Register.propTypes = {
     registerAccount: PropTypes.func.isRequired,
     loginWithFacebook: PropTypes.func.isRequired,
     onRegister: PropTypes.func.isRequired,
@@ -59,4 +59,4 @@ export default compose(
         undefined,
         mapDispatchToProps,
     ),
-)(Login);
+)(Register);

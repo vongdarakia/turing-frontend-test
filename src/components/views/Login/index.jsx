@@ -29,8 +29,11 @@ class Login extends Component {
     };
 
     render() {
+        const { className } = this.props;
+
         return (
             <LoginComponent
+                className={className}
                 id="login-modal-view"
                 onClickLogin={this.handleLogin}
                 onFacebookAccountRetrieved={this.handleLoginWithFacebook}
@@ -40,10 +43,15 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+    className: PropTypes.string,
     login: PropTypes.func.isRequired,
     loginWithFacebook: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
     onLoginWithFacebook: PropTypes.func.isRequired,
+};
+
+Login.defaultProps = {
+    className: undefined,
 };
 
 const mapDispatchToProps = {
