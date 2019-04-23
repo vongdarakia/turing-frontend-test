@@ -28,7 +28,7 @@ class UserHeader extends Component {
         let numItems = 0;
 
         cart.forEach((lineItem) => {
-            subtotal += parseFloat(lineItem.subtotal);
+            subtotal += parseFloat(lineItem.price) * lineItem.quantity;
             numItems += lineItem.quantity;
         });
 
