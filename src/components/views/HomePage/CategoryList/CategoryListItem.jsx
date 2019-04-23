@@ -1,9 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { PRIMARY_COLOR } from '../../../../styles/settings';
 
-const StyledButton = styled.button`
+const StyledButton = styled.h3`
+    cursor: pointer;
+
+    :hover {
+        color: ${PRIMARY_COLOR};
+    }
+
     &.selected {
-        color: red;
+        color: ${PRIMARY_COLOR};
     }
 `;
 
@@ -19,6 +27,16 @@ const CategoryListItem = (props) => {
             {category.name}
         </StyledButton>
     );
+};
+
+CategoryListItem.propTypes = {
+    category: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    isSelected: PropTypes.bool,
+};
+
+CategoryListItem.defaultProps = {
+    isSelected: false,
 };
 
 export default CategoryListItem;

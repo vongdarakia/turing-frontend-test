@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CategoryListComponent from './CategoryListComponent';
@@ -54,10 +55,11 @@ class CategoryList extends Component {
 
     render() {
         const { categories } = this.state;
-        const { selectedCategory } = this.props;
+        const { selectedCategory, className } = this.props;
 
         return (
             <CategoryListComponent
+                className={className}
                 categories={categories}
                 onSelectCategory={this.handleSelectCategory}
                 selectedCategory={selectedCategory}
@@ -65,6 +67,25 @@ class CategoryList extends Component {
         );
     }
 }
+
+CategoryList.propTypes = {
+    onSelectCategory: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    selectedCategory: PropTypes.shape({
+        name: PropTypes.string,
+        category_id: PropTypes.number,
+    }),
+    selectedDepartment: PropTypes.shape({
+        name: PropTypes.string,
+        department_id: PropTypes.number,
+    }),
+};
+
+CategoryList.defaultProps = {
+    className: undefined,
+    selectedCategory: undefined,
+    selectedDepartment: undefined,
+};
 
 const mapStateToProps = (state) => ({
     selectedCategory: state.main.selectedCategory,

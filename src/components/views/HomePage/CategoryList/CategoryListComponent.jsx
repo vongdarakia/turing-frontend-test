@@ -1,24 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import CategoryListItem from './CategoryListItem';
 
 const Wrapper = styled.div`
     padding: 16px;
-    border: 1px solid white;
 
     .category-title {
-        margin-bottom: 12px;
+        margin-top: 12px;
     }
 `;
 
 const CategoryListComponent = (props) => {
-    const { categories, onSelectCategory, selectedCategory } = props;
+    const { categories, onSelectCategory, selectedCategory, className } = props;
     const selectedId = (selectedCategory || {}).category_id;
 
     return (
-        <Wrapper>
-            <div className="category-title">Categories</div>
+        <Wrapper className={className}>
+            <h2 className="category-title">Categories</h2>
             {categories.map((category) => {
                 return (
                     <CategoryListItem
@@ -31,6 +31,27 @@ const CategoryListComponent = (props) => {
             })}
         </Wrapper>
     );
+};
+
+CategoryListComponent.propTypes = {
+    onSelectCategory: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    categories: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            category_id: PropTypes.number,
+        }),
+    ),
+    selectedCategory: PropTypes.shape({
+        name: PropTypes.string,
+        category_id: PropTypes.number,
+    }),
+};
+
+CategoryListComponent.defaultProps = {
+    className: 'category-list',
+    categories: [],
+    selectedCategory: undefined,
 };
 
 export default CategoryListComponent;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import HomeComponent from './HomeComponent';
 import { incrementItemInCart, decrementItemInCart } from '../Cart/duck/actions';
 import {
     registerAccount,
@@ -16,21 +16,27 @@ import TuringAPI from '../../../api';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
 import LoginModal from '../Login/LoginModal';
 import RegisterModal from '../Register/RegisterModal';
-import Modal from '../../common/Modal';
-import Checkout from '../Checkout';
 import CheckoutModal from '../Checkout/CheckoutModal';
 import UserHeader from './UserHeader';
 import ShopmateHeader from './ShopmateHeader';
+import CategoryList from './CategoryList';
+
+const Wrapper = styled.div`
+    .main-content {
+        display: flex;
+    }
+
+    .category-list {
+        max-width: 160px;
+        width: fit-content;
+    }
+`;
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            isRegisterModalOpen: false,
-            isLoginModalOpen: false,
-            isCheckoutModalOpen: false,
-        };
+        this.state = {};
     }
 
     componentDidMount = async () => {
@@ -42,51 +48,9 @@ class HomePage extends Component {
         }
     };
 
-    openRegisterModal = () => {
-        this.setState({
-            isRegisterModalOpen: true,
-        });
-    };
-
-    closeRegisterModal = () => {
-        this.setState({
-            isRegisterModalOpen: false,
-        });
-    };
-
-    openLoginModal = () => {
-        this.setState({
-            isLoginModalOpen: true,
-        });
-    };
-
-    closeLoginModal = () => {
-        this.setState({
-            isLoginModalOpen: false,
-        });
-    };
-
-    openCheckoutModal = () => {
-        this.setState({
-            isCheckoutModalOpen: true,
-        });
-    };
-
-    closeCheckoutModal = () => {
-        this.setState({
-            isCheckoutModalOpen: false,
-        });
-    };
-
     render() {
-        const {
-            isRegisterModalOpen,
-            isLoginModalOpen,
-            isCheckoutModalOpen,
-        } = this.state;
-
         return (
-            <div>
+            <Wrapper>
                 <LoginModal />
                 <RegisterModal />
                 <CheckoutModal />
@@ -94,18 +58,10 @@ class HomePage extends Component {
                 <UserHeader />
                 <ShopmateHeader />
 
-                <button type="button" onClick={this.openCheckoutModal}>
-                    Checkout
-                </button>
-                <div>
-                    <button type="button" onClick={this.openRegisterModal}>
-                        Register
-                    </button>
-                    <button type="button" onClick={this.openLoginModal}>
-                        Login
-                    </button>
+                <div className="main-content">
+                    <CategoryList />
                 </div>
-            </div>
+            </Wrapper>
         );
     }
 }
