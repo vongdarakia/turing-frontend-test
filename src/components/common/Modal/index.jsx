@@ -9,7 +9,6 @@ const ModalStyle = styled(MainStyles)`
     max-width: 760px;
     margin: auto;
     margin-top: 48px;
-    padding: 24px;
 `;
 
 const Modal = (props) => {

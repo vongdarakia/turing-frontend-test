@@ -19,12 +19,30 @@ class DeliverView extends Component {
     constructor(props) {
         super(props);
 
-        const { onClickBack } = props;
+        const {
+            onClickBack,
+            firstName,
+            lastName,
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+        } = props;
 
         this.state = {
             shippingOptions: [],
             btnPropsPrimary: {
                 onClick: this.handleGoNext,
+                disabled: !this.isFormValid({
+                    firstName,
+                    lastName,
+                    address,
+                    city,
+                    state,
+                    zipCode,
+                    country,
+                }),
             },
             btnPropsSecondary: {
                 onClick: onClickBack,
@@ -42,19 +60,28 @@ class DeliverView extends Component {
     };
 
     componentWillReceiveProps = async (nextProps) => {
-        const { user } = nextProps;
+        const {
+            user,
+            firstName,
+            lastName,
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+        } = nextProps;
+        const {
+            firstName: prevFirstName,
+            lastName: prevLastName,
+            address: prevAddress,
+            city: prevCity,
+            state: prevState,
+            zipCode: prevZipCode,
+            country: prevCountry,
+        } = this.props;
 
         if (user) {
-            console.log({ user });
             const {
-                addressForm: {
-                    firstName,
-                    lastName,
-                    address,
-                    city,
-                    state,
-                    zipCode,
-                } = {},
                 changeFirstName,
                 changeLastName,
                 changeAddress,
@@ -92,6 +119,26 @@ class DeliverView extends Component {
             if (!zipCode && userZipCode) {
                 changeZipCode(userZipCode);
             }
+        }
+
+        if (
+            firstName !== prevFirstName ||
+            lastName !== prevLastName ||
+            address !== prevAddress ||
+            city !== prevCity ||
+            state !== prevState ||
+            zipCode !== prevZipCode ||
+            country !== prevCountry
+        ) {
+            this.validateForm({
+                firstName,
+                lastName,
+                address,
+                city,
+                state,
+                zipCode,
+                country,
+            });
         }
     };
 
@@ -148,20 +195,71 @@ class DeliverView extends Component {
             onClickNext,
         } = this.props;
 
-        const response = await TuringAPI.updateCustomerAddress({
-            address_1: address,
-            city,
-            region: state || user.region,
-            postal_code: zipCode,
-            country: country || user.country,
-            shipping_region_id: user.shipping_region_id,
-        });
+        if (user) {
+            const response = await TuringAPI.updateCustomerAddress({
+                address_1: address || user.address_1,
+                city: city || user.city,
+                region: state || user.region,
+                postal_code: zipCode || user.postal_code,
+                country: country || user.country,
+                shipping_region_id: user.shipping_region_id,
+            });
+            console.log(response);
+        }
 
         onClickNext();
-        console.log(response);
     };
 
     handleGoBack = () => {};
+
+    isFormValid = ({
+        firstName,
+        lastName,
+        address,
+        city,
+        state,
+        zipCode,
+        country,
+    }) => {
+        return !!(
+            firstName &&
+            lastName &&
+            address &&
+            city &&
+            state &&
+            zipCode &&
+            country
+        );
+    };
+
+    validateForm = (formData) => {
+        const {
+            firstName,
+            lastName,
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+            btnPropsPrimary,
+        } = this.state;
+
+        this.setState({
+            btnPropsPrimary: {
+                ...btnPropsPrimary,
+                disabled: !this.isFormValid({
+                    firstName,
+                    lastName,
+                    address,
+                    city,
+                    state,
+                    zipCode,
+                    country,
+                    ...formData,
+                }),
+            },
+        });
+    };
 
     render() {
         const {
@@ -215,13 +313,13 @@ class DeliverView extends Component {
 
 DeliverView.propTypes = {
     className: PropTypes.string,
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-    zipCode: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipCode: PropTypes.string,
+    country: PropTypes.string,
     shippingOptionId: PropTypes.number.isRequired,
     changeFirstName: PropTypes.func.isRequired,
     changeLastName: PropTypes.func.isRequired,
@@ -241,21 +339,40 @@ DeliverView.propTypes = {
 
 DeliverView.defaultProps = {
     className: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    address: undefined,
+    city: undefined,
+    state: undefined,
+    zipCode: undefined,
+    country: undefined,
     user: undefined,
 };
 
-const mapStateToProps = ({ checkout, main: { user } }) => ({
-    firstName: checkout.firstName || user.name.split(' ')[0],
-    lastName: checkout.lastName || user.name.split(' ')[1],
-    address: checkout.address || user.address_1,
-    city: checkout.city || user.city,
-    state: checkout.state || user.region,
-    zipCode: checkout.zipCode || user.postal_code,
-    country: checkout.country || user.country,
-    shippingOptionId: checkout.shippingOptionId,
-    addressForm: checkout,
-    user,
-});
+const mapStateToProps = ({ checkout, main: { user } }) => {
+    const {
+        name: userName = '',
+        address_1: userAddress,
+        city: userCity,
+        region: userState,
+        postal_code: userZipCode,
+        country: userCountry,
+    } = user || {};
+    const [userFirstName, userLastName] = userName;
+
+    return {
+        firstName: checkout.firstName || userFirstName,
+        lastName: checkout.lastName || userLastName,
+        address: checkout.address || userAddress,
+        city: checkout.city || userCity,
+        state: checkout.state || userState,
+        zipCode: checkout.zipCode || userZipCode,
+        country: checkout.country || userCountry,
+        shippingOptionId: checkout.shippingOptionId,
+        addressForm: checkout,
+        user,
+    };
+};
 
 const mapDispatchToProps = {
     changeFirstName: updateFirstName,

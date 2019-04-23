@@ -11,6 +11,7 @@ import FormInputGroup from '../../../common/form/FormInputGroup';
 
 const Wrapper = styled.div`
     padding: 0 18px;
+    padding-top: 48px;
 
     hr {
         border: none;
@@ -80,10 +81,12 @@ const DeliveryViewComponent = (props) => {
 
     return (
         <Wrapper id="delivery-view" className="checkout-view">
+            <h2>Shipping Address</h2>
             <div className="form-address">
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
+                            required
                             label="First name"
                             inputProps={{
                                 id: 'first-name',
@@ -95,6 +98,7 @@ const DeliveryViewComponent = (props) => {
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
+                            required
                             label="Last name"
                             inputProps={{
                                 id: 'last-name',
@@ -108,6 +112,7 @@ const DeliveryViewComponent = (props) => {
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
+                            required
                             label="Address"
                             inputProps={{
                                 id: 'address',
@@ -119,6 +124,7 @@ const DeliveryViewComponent = (props) => {
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
+                            required
                             label="City"
                             inputProps={{
                                 id: 'city',
@@ -132,6 +138,7 @@ const DeliveryViewComponent = (props) => {
                 <div className="form-row">
                     <div className="form-col col-left">
                         <FormInputGroup
+                            required
                             label="State"
                             inputProps={{
                                 id: 'state',
@@ -143,6 +150,7 @@ const DeliveryViewComponent = (props) => {
                     </div>
                     <div className="form-col col-right">
                         <FormInputGroup
+                            required
                             label="ZIP code"
                             inputProps={{
                                 id: 'zipCode',
@@ -158,6 +166,7 @@ const DeliveryViewComponent = (props) => {
             <div className="form-address">
                 <div className="form-col col-left">
                     <FormInputGroup
+                        required
                         label="Country"
                         inputProps={{
                             id: 'country',
@@ -173,7 +182,7 @@ const DeliveryViewComponent = (props) => {
             <hr />
 
             <div className="delivery-options-section">
-                <h2>Delivery options</h2>
+                <h2>Delivery Options</h2>
 
                 {shippingOptions.length > 0 && (
                     <FormControl
@@ -207,13 +216,13 @@ const DeliveryViewComponent = (props) => {
 };
 
 DeliveryViewComponent.propTypes = {
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-    zipCode: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipCode: PropTypes.string,
+    country: PropTypes.string,
     shippingOptions: PropTypes.arrayOf(
         PropTypes.shape({
             shipping_id: PropTypes.number,
@@ -232,6 +241,13 @@ DeliveryViewComponent.propTypes = {
 };
 
 DeliveryViewComponent.defaultProps = {
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
     shippingOptions: [],
     shippingOptionId: undefined,
     onChangeCountry: undefined,

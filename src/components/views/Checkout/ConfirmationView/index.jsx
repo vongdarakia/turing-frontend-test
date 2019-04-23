@@ -100,7 +100,7 @@ class ConfirmationView extends Component {
                     grandTotal={this.getGrandTotal()}
                 />
                 <ViewFooter
-                    labelPrimary="Pay"
+                    labelPrimary="Next Step"
                     labelSecondary="Back"
                     btnPropsPrimary={btnPropsPrimary}
                     btnPropsSecondary={btnPropsSecondary}

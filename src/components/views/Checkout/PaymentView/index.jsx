@@ -14,7 +14,6 @@ class PaymentView extends Component {
         const { onClickBack } = props;
 
         this.state = {
-            shippingOptions: [],
             btnPropsPrimary: {
                 onClick: this.handleCheckout,
             },
@@ -26,65 +25,62 @@ class PaymentView extends Component {
 
     handleCheckout = async (e) => {
         e.preventDefault();
-        const { stripe, user, onSuccess, onFailure } = this.props;
+        const {
+            stripe,
+            onSuccess,
+            onFailure,
+            firstName,
+            lastName,
+            address,
+            city,
+            state,
+            zipCode,
+            country,
+            shippingOptionId,
+        } = this.props;
 
         try {
             const { token, error } = await stripe.createToken({
-                name: user.name,
-                address_line1: '91 Rosemary Drive',
-                address_city: '',
-                address_state: '',
-                address_zip: '',
-                address_country: '',
+                name: `${firstName} ${lastName}`.trim(),
+                address_line1: address,
+                address_city: city,
+                address_state: state,
+                address_zip: zipCode,
+                address_country: country,
             });
-            console.log({ token, user, error });
+
+            if (error) {
+                console.log(error);
+                throw new Error(error.message);
+            }
 
             const cart_id = await TuringAPI.getCartId();
-            let cart = await TuringAPI.addItemToCart({
+            const { orderId, error: orderError } = await TuringAPI.createOrder({
                 cart_id,
-                product_id: 2,
-                attributes: [],
+                shipping_id: shippingOptionId,
+                tax_id: 2,
             });
 
-            cart = await TuringAPI.addItemToCart({
-                cart_id,
-                product_id: 4,
-                attributes: [],
-            });
-            // const taxes = await TuringAPI.getAllTaxes();
-            // const regions = await TuringAPI.getAllShippingRegions();
-            // const shipping = await TuringAPI.getShippingOptionsByRegionId({
-            //     shipping_region_id: 3,
-            // });
-
-            const customer = await TuringAPI.getCustomer();
-
-            // console.log({ taxes, regions, shipping });
-
-            const { orderId } = await TuringAPI.createOrder({
-                cart_id,
-                customer_id: customer.customer_id,
-                shipping_id: 1,
-                tax_id: 1,
-            });
+            if (orderError) {
+                throw new Error(orderError.message);
+            }
 
             const order = await TuringAPI.getShortDetailOrder({
                 order_id: orderId,
             });
-            console.log(order);
             const result = await TuringAPI.stripeCharge({
                 stripeToken: token.id,
                 order_id: orderId,
-                amount: parseFloat(order.total_amount) * 100,
+                amount: Math.floor(parseFloat(order.total_amount) * 100),
                 description: `Ordered on ${order.created_on}`,
             });
-
+            console.log(result);
             if (result.error) {
                 onFailure(result.error);
+                throw new Error(result.error);
             } else {
                 onSuccess();
             }
-            console.log(result);
         } catch (err) {
             console.error(err);
         }
@@ -98,7 +94,7 @@ class PaymentView extends Component {
             <div className={className}>
                 <PaymentViewComponent onCheckout={this.handleCheckout} />
                 <ViewFooter
-                    labelPrimary="Next Step"
+                    labelPrimary="Pay"
                     labelSecondary="Back"
                     btnPropsPrimary={btnPropsPrimary}
                     btnPropsSecondary={btnPropsSecondary}
@@ -110,6 +106,14 @@ class PaymentView extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.main.user,
+    firstName: state.checkout.firstName,
+    lastName: state.checkout.lastName,
+    address: state.checkout.address,
+    city: state.checkout.city,
+    state: state.checkout.state,
+    zipCode: state.checkout.zipCode,
+    country: state.checkout.country,
+    shippingOptionId: state.checkout.shippingOptionId,
 });
 
 export default compose(

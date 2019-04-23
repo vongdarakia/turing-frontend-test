@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { PRIMARY_COLOR } from '../../../../styles/settings';
 
 const Wrapper = styled.div`
+    padding-top: 48px;
+
     hr {
         border: none;
         margin-top: 48px;
@@ -238,8 +240,8 @@ ConfirmationViewComponent.propTypes = {
             sub_total: PropTypes.number,
         }),
     ).isRequired,
-    subtotal: PropTypes.number.isRequired,
-    grandTotal: PropTypes.number.isRequired,
+    subtotal: PropTypes.string.isRequired,
+    grandTotal: PropTypes.string.isRequired,
 };
 
 export default ConfirmationViewComponent;

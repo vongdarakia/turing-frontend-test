@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputBase from '@material-ui/core/InputBase';
 
 const Wrapper = styled.div`
-    margin: 12px 0;
+    margin: 4px 0;
     text-align: left;
 
     .form-label {
@@ -46,6 +46,7 @@ const Wrapper = styled.div`
 const FormInputGroup = (props) => {
     const {
         label,
+        required,
         error,
         inputProps: { id, className: inputClass },
         inputProps,
@@ -57,7 +58,7 @@ const FormInputGroup = (props) => {
         <Wrapper className={`form-input-group ${errorClass}`}>
             {label && (
                 <InputLabel className="form-label" htmlFor={id}>
-                    {label}
+                    {`${label} ${required ? '*' : ''}`}
                 </InputLabel>
             )}
 
@@ -78,11 +79,13 @@ FormInputGroup.propTypes = {
     }).isRequired,
     label: PropTypes.string,
     error: PropTypes.bool,
+    required: PropTypes.bool,
 };
 
 FormInputGroup.defaultProps = {
     label: undefined,
     error: false,
+    required: false,
 };
 
 export default FormInputGroup;
