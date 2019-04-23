@@ -5,6 +5,12 @@ import {
     CLEAR_CATEGORY,
     SELECT_DEPARTMENT,
     CLEAR_DEPARTMENT,
+    OPEN_REGISTER_MODAL,
+    CLOSE_REGISTER_MODAL,
+    OPEN_CHECKOUT_MODAL,
+    CLOSE_CHECKOUT_MODAL,
+    CLOSE_LOGIN_MODAL,
+    OPEN_LOGIN_MODAL,
 } from './types';
 import TuringAPI from '../../../../api';
 import { KEY_TOKEN } from '../../../../api/config';
@@ -83,4 +89,28 @@ export const selectDepartment = (department) => ({
 
 export const clearDepartment = () => ({
     type: CLEAR_DEPARTMENT,
+});
+
+export const openLoginModal = () => ({
+    type: OPEN_LOGIN_MODAL,
+});
+
+export const closeLoginModal = () => ({
+    type: CLOSE_LOGIN_MODAL,
+});
+
+export const openRegisterModal = () => ({
+    type: OPEN_REGISTER_MODAL,
+});
+
+export const closeRegisterModal = () => ({
+    type: CLOSE_REGISTER_MODAL,
+});
+
+export const openCheckoutModal = () => ({
+    type: OPEN_CHECKOUT_MODAL,
+});
+
+export const closeCheckoutModal = () => ({
+    type: CLOSE_CHECKOUT_MODAL,
 });

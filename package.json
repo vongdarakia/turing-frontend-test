@@ -50,6 +50,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "prettier": "^1.17.0",
     "redux-devtools-extension": "^2.13.8",
-    "storybook": "^1.0.0"
+    "storybook": "^1.0.0",
+    "storybook-react-router": "^1.0.5"
   }
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 import Modal from '../../common/Modal';
 import Register from '.';
+import { closeRegisterModal } from '../HomePage/duck/actions';
 
 const StyledModal = styled(Modal)`
     width: 100%;
@@ -25,4 +28,15 @@ RegisterModal.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default RegisterModal;
+const mapStateToProps = (state) => ({
+    open: state.main.isRegisterModalOpen,
+});
+
+const mapDispatchToProps = {
+    onClose: closeRegisterModal,
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(RegisterModal);

@@ -14,6 +14,12 @@ import {
 import { KEY_TOKEN } from '../../../api/config';
 import TuringAPI from '../../../api';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
+import LoginModal from '../Login/LoginModal';
+import RegisterModal from '../Register/RegisterModal';
+import Modal from '../../common/Modal';
+import Checkout from '../Checkout';
+import CheckoutModal from '../Checkout/CheckoutModal';
+import Header from './Header';
 
 class HomePage extends Component {
     constructor(props) {
@@ -79,21 +85,24 @@ class HomePage extends Component {
         } = this.state;
 
         return (
-            <HomeComponent
-                {...this.props}
-                isRegisterModalOpen={isRegisterModalOpen}
-                onRegister={this.handleRegister}
-                onOpenRegisterModal={this.openRegisterModal}
-                onCloseRegisterModal={this.closeRegisterModal}
-                onLogin={this.closeLoginModal}
-                onLoginWithFacebook={this.closeLoginModal}
-                isLoginModalOpen={isLoginModalOpen}
-                onCloseLoginModal={this.closeLoginModal}
-                onOpenLoginModal={this.openLoginModal}
-                isCheckoutModalOpen={isCheckoutModalOpen}
-                onCloseCheckoutModal={this.closeCheckoutModal}
-                onOpenCheckoutModal={this.openCheckoutModal}
-            />
+            <div>
+                <Header />
+                <LoginModal />
+                <RegisterModal />
+                <CheckoutModal />
+
+                <button type="button" onClick={this.openCheckoutModal}>
+                    Checkout
+                </button>
+                <div>
+                    <button type="button" onClick={this.openRegisterModal}>
+                        Register
+                    </button>
+                    <button type="button" onClick={this.openLoginModal}>
+                        Login
+                    </button>
+                </div>
+            </div>
         );
     }
 }
