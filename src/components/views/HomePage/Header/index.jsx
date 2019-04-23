@@ -7,6 +7,7 @@ import {
     openRegisterModal as openRegisterModalAction,
     openCheckoutModal as openCheckoutModalAction,
     openLoginModal as openLoginModalAction,
+    logOut as logOutAction,
 } from '../duck/actions';
 import getCartLineItemsFromTable from '../../../../utils/get-cart-line-items';
 
@@ -43,6 +44,8 @@ class Header extends Component {
             openRegisterModal,
             openCheckoutModal,
             openLoginModal,
+            logOut,
+            user,
         } = this.props;
         const { subtotal, numItems } = this.state;
 
@@ -50,9 +53,11 @@ class Header extends Component {
             <HeaderComponent
                 onClickRegister={openRegisterModal}
                 onClickLogin={openLoginModal}
+                onClickLogOut={logOut}
                 onClickCart={openCheckoutModal}
                 numItems={numItems}
                 subtotal={subtotal}
+                user={user}
             />
         );
     }
@@ -62,14 +67,24 @@ Header.propTypes = {
     openRegisterModal: PropTypes.func.isRequired,
     openCheckoutModal: PropTypes.func.isRequired,
     openLoginModal: PropTypes.func.isRequired,
+    logOut: PropTypes.func.isRequired,
+    user: PropTypes.shape({
+        name: PropTypes.string,
+    }),
+};
+
+Header.defaultProps = {
+    user: undefined,
 };
 
 const mapStateToProps = (state) => ({
     open: state.main.isRegisterModalOpen,
     cart: getCartLineItemsFromTable(state.cart),
+    user: state.main.user,
 });
 
 const mapDispatchToProps = {
+    logOut: logOutAction,
     openRegisterModal: openRegisterModalAction,
     openCheckoutModal: openCheckoutModalAction,
     openLoginModal: openLoginModalAction,

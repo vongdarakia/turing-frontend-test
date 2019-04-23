@@ -51,6 +51,7 @@ class RegisterComponent extends Component {
         super(props);
 
         this.state = {
+            name: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -58,12 +59,16 @@ class RegisterComponent extends Component {
     }
 
     handleRegister = () => {
-        const { email, password, error } = this.state;
+        const { name, email, password, error } = this.state;
         const { onClickRegister } = this.props;
 
         if (!error) {
-            onClickRegister({ email, password });
+            onClickRegister({ name, email, password });
         }
+    };
+
+    handleChangeName = (e) => {
+        this.setState({ name: e.target.value });
     };
 
     handleChangeEmail = (e) => {
@@ -91,11 +96,20 @@ class RegisterComponent extends Component {
 
     render() {
         const { onFacebookAccountRetrieved, className, id } = this.props;
-        const { email, password, confirmPassword, error } = this.state;
+        const { name, email, password, confirmPassword, error } = this.state;
 
         return (
             <Wrapper id={id} className={className}>
                 <h2>Sign up</h2>
+                <FormInputGroup
+                    inputProps={{
+                        id: 'name',
+                        placeholder: 'Name',
+                        name: 'name',
+                        value: name,
+                        onChange: this.handleChangeName,
+                    }}
+                />
                 <FormInputGroup
                     inputProps={{
                         id: 'email',

@@ -41,6 +41,9 @@ const Wrapper = styled.div`
     }
 
     .section-cart {
+        display: flex;
+        flex-direction: row;
+
         .bag-badge {
             margin-right: 16px;
             :hover {
@@ -56,28 +59,57 @@ const Wrapper = styled.div`
             font-size: 20px;
         }
     }
+
+    #btn-logout,
+    #btn-login {
+        margin-left: 8px;
+    }
 `;
 
 const HeaderComponent = (props) => {
     const {
         numItems,
         onClickLogin,
+        onClickLogOut,
         onClickRegister,
         onClickCart,
         subtotal,
+        user,
     } = props;
+    let welcomeMessage = 'Hi!';
+
+    if (user) {
+        welcomeMessage = `Hi, ${user.name}! `;
+    }
 
     return (
         <Wrapper>
             <div className="section-auth">
-                Hi!{' '}
-                <span className="auth-link" onClick={onClickLogin}>
-                    Sign in
-                </span>{' '}
-                or{' '}
-                <span className="auth-link" onClick={onClickRegister}>
-                    Register
-                </span>
+                {welcomeMessage}
+                {user && (
+                    <span
+                        id="btn-logout"
+                        className="auth-link"
+                        onClick={onClickLogOut}
+                    >
+                        Log out
+                    </span>
+                )}
+                {!user && (
+                    <React.Fragment>
+                        <span
+                            id="btn-login"
+                            className="auth-link"
+                            onClick={onClickLogin}
+                        >
+                            Sign in{' '}
+                        </span>
+                        or{' '}
+                        <span className="auth-link" onClick={onClickRegister}>
+                            Register
+                        </span>
+                    </React.Fragment>
+                )}
             </div>
             <div className="options">
                 <Link to="/dailydeals">Daily Deals</Link>
@@ -95,7 +127,7 @@ const HeaderComponent = (props) => {
                 >
                     <Icon className="basket-icon">shopping_basket</Icon>
                 </Badge>
-                Your bag: <span>{`$${subtotal || '0.00'}`}</span>
+                <div>Your bag: {`$${subtotal || '0.00'}`}</div>
             </div>
         </Wrapper>
     );
@@ -105,8 +137,16 @@ HeaderComponent.propTypes = {
     subtotal: PropTypes.string.isRequired,
     numItems: PropTypes.number.isRequired,
     onClickLogin: PropTypes.func.isRequired,
+    onClickLogOut: PropTypes.func.isRequired,
     onClickRegister: PropTypes.func.isRequired,
     onClickCart: PropTypes.func.isRequired,
+    user: PropTypes.shape({
+        name: PropTypes.string,
+    }),
+};
+
+HeaderComponent.defaultProps = {
+    user: undefined,
 };
 
 export default HeaderComponent;
