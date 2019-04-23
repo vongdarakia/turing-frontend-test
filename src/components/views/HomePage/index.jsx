@@ -20,6 +20,7 @@ import CheckoutModal from '../Checkout/CheckoutModal';
 import UserHeader from './UserHeader';
 import ShopmateHeader from './ShopmateHeader';
 import CategoryList from './CategoryList';
+import ProductList from './ProductList';
 
 const Wrapper = styled.div`
     .main-content {
@@ -60,6 +61,7 @@ class HomePage extends Component {
 
                 <div className="main-content">
                     <CategoryList />
+                    <ProductList />
                 </div>
             </Wrapper>
         );

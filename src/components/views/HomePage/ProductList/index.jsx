@@ -75,7 +75,7 @@ class ProductList extends Component {
         }
     };
 
-    loadProducts = async ({ page, category_id, department_id }) => {
+    loadProducts = async ({ page, category_id, department_id } = {}) => {
         let { products, count } = await TuringAPI.getAllProducts({
             page,
         });
@@ -85,6 +85,7 @@ class ProductList extends Component {
                 products = [],
                 count = 0,
             } = await TuringAPI.getProductsByCategory({
+                page,
                 category_id,
             }));
         } else if (department_id) {
@@ -92,6 +93,7 @@ class ProductList extends Component {
                 products = [],
                 count = 0,
             } = await TuringAPI.getProductsByDepartment({
+                page,
                 department_id,
             }));
         }
@@ -108,6 +110,7 @@ class ProductList extends Component {
         const { department_id } = selectedDepartment || {};
 
         this.setState({ page });
+        console.log({ page, category_id, department_id });
         this.loadProducts({ page, category_id, department_id });
     };
 
