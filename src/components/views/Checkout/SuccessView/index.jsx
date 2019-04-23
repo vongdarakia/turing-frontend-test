@@ -1,35 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import SuccessViewComponent from './SuccessViewComponent';
+import { closeCheckoutModal as closeCheckoutModalAction } from '../../HomePage/duck/actions';
 
-class SuccessView extends Component {
-    handleGoBackToShop = () => {
-        const { onClickBackToShop } = this.props;
+const SuccessView = (props) => {
+    const { className, closeCheckoutModal } = props;
 
-        onClickBackToShop();
-    };
-
-    render() {
-        const { className } = this.props;
-
-        return (
-            <div className={className}>
-                <SuccessViewComponent
-                    onClickBackToShop={this.handleGoBackToShop}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className={className}>
+            <SuccessViewComponent onClickBackToShop={closeCheckoutModal} />
+        </div>
+    );
+};
 
 SuccessView.propTypes = {
     className: PropTypes.string,
-    onClickBackToShop: PropTypes.func.isRequired,
+    closeCheckoutModal: PropTypes.func.isRequired,
 };
 
 SuccessView.defaultProps = {
     className: undefined,
 };
 
-export default SuccessView;
+const mapDispatchToProps = {
+    closeCheckoutModal: closeCheckoutModalAction,
+};
+
+export default connect(
+    undefined,
+    mapDispatchToProps,
+)(SuccessView);
