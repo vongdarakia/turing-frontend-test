@@ -11,6 +11,7 @@ import DepartmentList from './DepartmentList';
 import Checkout from '../Checkout';
 import Modal from '../../common/Modal';
 import LoginModal from '../Login/LoginModal';
+import RegisterModal from '../Register/RegisterModal';
 // import RegisterModal from '../Register/RegisterModal';
 
 const HomeComponent = (props) => {
@@ -47,16 +48,15 @@ const HomeComponent = (props) => {
                         </button>
                     </div>
                 )}
-                <Modal
-                    open={isRegisterModalOpen}
-                    onClose={onCloseRegisterModal}
-                >
-                    <RegisterComponent onRegister={onRegister} />
-                </Modal>
 
                 <LoginModal
                     open={isLoginModalOpen}
                     onClose={onCloseLoginModal}
+                />
+
+                <RegisterModal
+                    open={isRegisterModalOpen}
+                    onClose={onCloseRegisterModal}
                 />
 
                 <Modal

@@ -52,9 +52,9 @@ class LoginComponent extends Component {
 
     handleLogin = () => {
         const { email, password } = this.state;
-        const { onLogin } = this.props;
+        const { onClickLogin } = this.props;
 
-        onLogin({ email, password });
+        onClickLogin({ email, password });
     };
 
     handleChangeEmail = (e) => {
@@ -66,7 +66,7 @@ class LoginComponent extends Component {
     };
 
     render() {
-        const { onLoginWithFacebook, className, id } = this.props;
+        const { onFacebookAccountRetrieved, className, id } = this.props;
         const { email, password } = this.state;
 
         return (
@@ -95,6 +95,7 @@ class LoginComponent extends Component {
                     id="btn-login"
                     className="primary"
                     onClick={this.handleLogin}
+                    disabled={!(email && password)}
                 >
                     Sign In
                 </Button>
@@ -106,7 +107,7 @@ class LoginComponent extends Component {
                 <FacebookLogin
                     appId="352854622106208"
                     fields="name,email,picture"
-                    callback={onLoginWithFacebook}
+                    callback={onFacebookAccountRetrieved}
                     render={({ onClick }) => {
                         return (
                             <Button id="btn-login-facebook" onClick={onClick}>
@@ -123,8 +124,8 @@ class LoginComponent extends Component {
 LoginComponent.propTypes = {
     id: PropTypes.string,
     className: PropTypes.string,
-    onLogin: PropTypes.func.isRequired,
-    onLoginWithFacebook: PropTypes.func.isRequired,
+    onClickLogin: PropTypes.func.isRequired,
+    onFacebookAccountRetrieved: PropTypes.func.isRequired,
 };
 
 LoginComponent.defaultProps = {

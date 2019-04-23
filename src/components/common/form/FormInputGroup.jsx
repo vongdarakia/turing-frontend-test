@@ -33,27 +33,35 @@ const Wrapper = styled.div`
             height: fit-content;
         }
     }
+
+    &.error {
+        .form-label,
+        input {
+            color: #f44336;
+            border-color: #f44336;
+        }
+    }
 `;
 
 const FormInputGroup = (props) => {
     const {
         label,
-        inputProps: { id, className },
+        error,
+        inputProps: { id, className: inputClass },
         inputProps,
     } = props;
+    const errorClass = error ? 'error' : '';
+    const className = `form-input ${inputClass || ''} ${errorClass}`;
 
     return (
-        <Wrapper className="form-input-group">
+        <Wrapper className={`form-input-group ${errorClass}`}>
             {label && (
                 <InputLabel className="form-label" htmlFor={id}>
                     {label}
                 </InputLabel>
             )}
 
-            <InputBase
-                {...inputProps}
-                className={`form-input ${className || ''}`}
-            />
+            <InputBase {...inputProps} className={className} />
         </Wrapper>
     );
 };
@@ -68,7 +76,13 @@ FormInputGroup.propTypes = {
         onChange: PropTypes.func,
         disabled: PropTypes.bool,
     }).isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    error: PropTypes.bool,
+};
+
+FormInputGroup.defaultProps = {
+    label: undefined,
+    error: false,
 };
 
 export default FormInputGroup;

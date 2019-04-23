@@ -71,15 +71,6 @@ class HomePage extends Component {
         });
     };
 
-    handleRegister = async ({ name, email, password }) => {
-        const { onRegister } = this.props;
-        const response = await onRegister({ name, email, password });
-
-        if (response.customer) {
-            this.closeRegisterModal();
-        }
-    };
-
     render() {
         const {
             isRegisterModalOpen,

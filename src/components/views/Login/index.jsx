@@ -32,8 +32,8 @@ class Login extends Component {
         return (
             <LoginComponent
                 id="login-modal-view"
-                onLogin={this.handleLogin}
-                onLoginWithFacebook={this.handleLoginWithFacebook}
+                onClickLogin={this.handleLogin}
+                onFacebookAccountRetrieved={this.handleLoginWithFacebook}
             />
         );
     }
