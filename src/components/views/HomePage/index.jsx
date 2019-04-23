@@ -19,7 +19,7 @@ import RegisterModal from '../Register/RegisterModal';
 import Modal from '../../common/Modal';
 import Checkout from '../Checkout';
 import CheckoutModal from '../Checkout/CheckoutModal';
-import Header from './Header';
+import UserHeader from './UserHeader';
 
 class HomePage extends Component {
     constructor(props) {
@@ -86,7 +86,7 @@ class HomePage extends Component {
 
         return (
             <div>
-                <Header />
+                <UserHeader />
                 <LoginModal />
                 <RegisterModal />
                 <CheckoutModal />

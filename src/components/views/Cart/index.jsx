@@ -11,12 +11,13 @@ import {
     removeItemFromCart,
 } from './duck/actions';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
+import { closeCheckoutModal as closeCheckoutModalAction } from '../HomePage/duck/actions';
 
 class Cart extends Component {
     constructor(props) {
         super(props);
 
-        const { onClickBackToShop, onClickNext, cart } = props;
+        const { closeCheckoutModal, onClickNext, cart } = props;
 
         this.state = {
             btnPropsPrimary: {
@@ -24,7 +25,7 @@ class Cart extends Component {
                 disabled: cart.length === 0,
             },
             btnPropsSecondary: {
-                onClick: onClickBackToShop,
+                onClick: closeCheckoutModal,
             },
         };
     }
@@ -81,6 +82,7 @@ const mapDispatchToProps = {
     increaseItemInCart: incrementItemInCart,
     decreaseItemInCart: decrementItemInCart,
     deleteItem: removeItemFromCart,
+    closeCheckoutModal: closeCheckoutModalAction,
 };
 
 export default compose(

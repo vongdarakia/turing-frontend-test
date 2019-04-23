@@ -39,14 +39,7 @@ class Checkout extends Component {
     };
 
     renderCartView = () => {
-        const { onCloseModal } = this.props;
-
-        return (
-            <Cart
-                onClickBackToShop={onCloseModal}
-                onClickNext={this.goToNextStage}
-            />
-        );
+        return <Cart onClickNext={this.goToNextStage} />;
     };
 
     renderDeliveryView = () => {
@@ -82,9 +75,7 @@ class Checkout extends Component {
     };
 
     renderSuccessView = () => {
-        const { onCloseModal } = this.props;
-
-        return <SuccessView onClickBackToShop={onCloseModal} />;
+        return <SuccessView />;
     };
 
     render() {

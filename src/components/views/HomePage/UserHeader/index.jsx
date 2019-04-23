@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import HeaderComponent from './HeaderComponent';
+import UserHeaderComponent from './UserHeaderComponent';
 import {
     openRegisterModal as openRegisterModalAction,
     openCheckoutModal as openCheckoutModalAction,
@@ -50,7 +50,7 @@ class Header extends Component {
         const { subtotal, numItems } = this.state;
 
         return (
-            <HeaderComponent
+            <UserHeaderComponent
                 onClickRegister={openRegisterModal}
                 onClickLogin={openLoginModal}
                 onClickLogOut={logOut}
