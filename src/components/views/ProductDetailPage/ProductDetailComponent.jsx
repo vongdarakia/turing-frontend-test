@@ -8,7 +8,7 @@ const ProductDetailComponent = (props) => {
             price,
             discounted_price,
             image,
-            image2,
+            image_2,
         } = {},
         onAddToCart,
     } = props;
@@ -19,7 +19,7 @@ const ProductDetailComponent = (props) => {
             <div>price: {price}</div>
             <div>discounted price: {discounted_price}</div>
             <div>img1: {image}</div>
-            <div>img2: {image2}</div>
+            <div>img2: {image_2}</div>
             <button onClick={onAddToCart}>Add to cart</button>
         </div>
     );

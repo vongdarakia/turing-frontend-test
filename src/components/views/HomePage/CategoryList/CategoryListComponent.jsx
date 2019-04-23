@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import CategoryListItem from './CategoryListItem';
 
 const Wrapper = styled.div`
-    padding: 16px;
-
+    margin-right: 24px;
     .category-title {
         margin-top: 12px;
     }

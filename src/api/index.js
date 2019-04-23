@@ -27,7 +27,9 @@ const memoizeFunctions = (functionsTable, restrictedFunctions = []) => {
     return memoizedFunctionsTable;
 };
 
-const apiCalls = {
+// API calls that will return data that most likely won't be different
+// within the user's session
+const staticApiCalls = {
     ...categories,
     ...departments,
     ...products,
@@ -35,16 +37,16 @@ const apiCalls = {
     ...shipping,
 };
 
-// Spreading the API call first so that the IDE can pick up what functions are
+// Spreading the Static API call first so that the IDE can pick up what functions are
 // in this object. This allows autocompletion when looking for an API call.
 // Then rewriting them with their memoized version.
 const TuringAPI = {
-    ...apiCalls,
+    ...staticApiCalls,
     ...customers,
     ...shoppingCart,
     ...stripe,
     ...orders,
-    ...memoizeFunctions(apiCalls),
+    ...memoizeFunctions(staticApiCalls),
 };
 
 export default TuringAPI;

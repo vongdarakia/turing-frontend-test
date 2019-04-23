@@ -25,6 +25,7 @@ import ProductList from './ProductList';
 const Wrapper = styled.div`
     .main-content {
         display: flex;
+        padding: 18px;
     }
 
     .category-list {

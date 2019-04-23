@@ -30,7 +30,9 @@ const CategoryListItem = (props) => {
 };
 
 CategoryListItem.propTypes = {
-    category: PropTypes.string.isRequired,
+    category: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+    }).isRequired,
     onClick: PropTypes.func.isRequired,
     isSelected: PropTypes.bool,
 };

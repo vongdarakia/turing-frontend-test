@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
-import getItemImageUrl from '../../../utils/get-item-image-url';
+import getItemImageUrlByName from '../../../utils/get-item-image-url';
 
 const Wrapper = styled.div`
     padding-top: 24px;
@@ -176,7 +177,9 @@ class CartComponent extends Component {
                             <div className="item">
                                 <div className="item-image">
                                     <img
-                                        src={getItemImageUrl(lineItem.name)}
+                                        src={getItemImageUrlByName(
+                                            lineItem.name,
+                                        )}
                                         alt={lineItem.name}
                                     />
                                 </div>
@@ -231,5 +234,23 @@ class CartComponent extends Component {
         );
     }
 }
+
+CartComponent.propTypes = {
+    cart: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.string,
+            quantity: PropTypes.number,
+            attributes: PropTypes.string,
+        }),
+    ),
+    onRemoveItemFromCart: PropTypes.func.isRequired,
+    onRemoveItem: PropTypes.func.isRequired,
+    onAddItem: PropTypes.func.isRequired,
+};
+
+CartComponent.defaultProps = {
+    cart: [],
+};
 
 export default CartComponent;

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import ProductCard from '../../../common/ProductCard';
 
 const Wrapper = styled.div`
+    flex: 1;
+
     .product-list-pagination {
         display: flex;
         justify-content: center;
@@ -13,6 +15,18 @@ const Wrapper = styled.div`
         }
         .current-page {
             color: red;
+        }
+    }
+
+    .product-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-gap: 1em;
+        margin: 1em 0 3em;
+
+        .product-card {
+            margin: 12px 4px 0;
         }
     }
 `;
@@ -48,11 +62,13 @@ const ProductListComponent = (props) => {
         }
     }
     return (
-        <Wrapper className={className}>
+        <Wrapper className={`product-list-container ${className || ''}`}>
             <div className="product-list-pagination">{pages}</div>
-            {products.map((product) => (
-                <ProductCard key={product.product_id} product={product} />
-            ))}
+            <div className="product-list">
+                {products.map((product) => (
+                    <ProductCard key={product.product_id} product={product} />
+                ))}
+            </div>
         </Wrapper>
     );
 };
