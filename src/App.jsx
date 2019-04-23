@@ -12,7 +12,11 @@ import {
 } from './components/views/Cart/duck/actions';
 import Routes from './routes';
 import history from './routes/history';
-import { loginWithFacebook } from './components/views/HomePage/duck/actions';
+import {
+    loginWithFacebook,
+    storeDepartments as storeDepartmentsAction,
+    storeCategories as storeCategoriesAction,
+} from './components/views/HomePage/duck/actions';
 import { KEY_TOKEN } from './api/config';
 import TuringAPI from './api';
 import { KEY_CART_ID } from './components/views/Cart/duck/types';
@@ -22,7 +26,12 @@ import MainStyles from './styles/MainStyle';
 
 class App extends Component {
     componentDidMount = async () => {
-        const { user, saveCart } = this.props;
+        const {
+            user,
+            saveCart,
+            storeDepartments,
+            storeCategories,
+        } = this.props;
         const cart_id = await TuringAPI.getCartId();
 
         // const cart = await TuringAPI.addItemToCart({
@@ -56,6 +65,12 @@ class App extends Component {
         });
 
         const customer = await TuringAPI.getCustomer();
+
+        const departments = await TuringAPI.getAllDepartments();
+        const { categories } = await TuringAPI.getAllCategories();
+
+        storeDepartments(departments);
+        storeCategories(categories);
 
         console.log({ regions, shipping });
 
@@ -103,38 +118,6 @@ class App extends Component {
                 <Router history={history}>
                     <Routes />
                 </Router>
-                {/* <Checkout /> */}
-                {/* <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    {this.props.cart.map((lineItem) => {
-                        return (
-                            <div>
-                                {lineItem.item.name} x {lineItem.amount}
-                            </div>
-                        );
-                    })}
-                    <button
-                        onClick={() => {
-                            console.log('clicking');
-                            this.props.incrementItemInCart({
-                                product_id: 'abc',
-                                name: 'Shirt',
-                            });
-                        }}
-                    >
-                        Increment
-                    </button>
-                    <button
-                        onClick={() => {
-                            this.props.decrementItemInCart({
-                                product_id: 'abc',
-                                name: 'Shirt',
-                            });
-                        }}
-                    >
-                        Decrement
-                    </button>
-                </header> */}
             </MainStyles>
         );
     }
@@ -147,6 +130,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     onLoginWithFacebook: loginWithFacebook,
     saveCart: storeCart,
+    storeDepartments: storeDepartmentsAction,
+    storeCategories: storeCategoriesAction,
 };
 
 export default connect(

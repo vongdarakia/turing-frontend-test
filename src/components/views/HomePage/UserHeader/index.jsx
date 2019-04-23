@@ -11,7 +11,7 @@ import {
 } from '../duck/actions';
 import getCartLineItemsFromTable from '../../../../utils/get-cart-line-items';
 
-class Header extends Component {
+class UserHeader extends Component {
     constructor(props) {
         super(props);
 
@@ -63,7 +63,7 @@ class Header extends Component {
     }
 }
 
-Header.propTypes = {
+UserHeader.propTypes = {
     openRegisterModal: PropTypes.func.isRequired,
     openCheckoutModal: PropTypes.func.isRequired,
     openLoginModal: PropTypes.func.isRequired,
@@ -73,7 +73,7 @@ Header.propTypes = {
     }),
 };
 
-Header.defaultProps = {
+UserHeader.defaultProps = {
     user: undefined,
 };
 
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Header);
+)(UserHeader);

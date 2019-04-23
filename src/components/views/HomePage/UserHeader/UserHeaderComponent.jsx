@@ -66,7 +66,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const HeaderComponent = (props) => {
+const UserHeaderComponent = (props) => {
     const {
         numItems,
         onClickLogin,
@@ -133,7 +133,7 @@ const HeaderComponent = (props) => {
     );
 };
 
-HeaderComponent.propTypes = {
+UserHeaderComponent.propTypes = {
     subtotal: PropTypes.string.isRequired,
     numItems: PropTypes.number.isRequired,
     onClickLogin: PropTypes.func.isRequired,
@@ -145,8 +145,8 @@ HeaderComponent.propTypes = {
     }),
 };
 
-HeaderComponent.defaultProps = {
+UserHeaderComponent.defaultProps = {
     user: undefined,
 };
 
-export default HeaderComponent;
+export default UserHeaderComponent;

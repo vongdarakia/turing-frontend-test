@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import DeliveryView from './DeliveryView';
@@ -97,9 +96,5 @@ class Checkout extends Component {
         return this.renderCartView();
     }
 }
-
-Checkout.propTypes = {
-    onCloseModal: PropTypes.func.isRequired,
-};
 
 export default Checkout;

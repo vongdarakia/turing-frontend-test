@@ -20,6 +20,7 @@ import Modal from '../../common/Modal';
 import Checkout from '../Checkout';
 import CheckoutModal from '../Checkout/CheckoutModal';
 import UserHeader from './UserHeader';
+import ShopmateHeader from './ShopmateHeader';
 
 class HomePage extends Component {
     constructor(props) {
@@ -86,10 +87,12 @@ class HomePage extends Component {
 
         return (
             <div>
-                <UserHeader />
                 <LoginModal />
                 <RegisterModal />
                 <CheckoutModal />
+
+                <UserHeader />
+                <ShopmateHeader />
 
                 <button type="button" onClick={this.openCheckoutModal}>
                     Checkout

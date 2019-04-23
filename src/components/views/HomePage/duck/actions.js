@@ -11,6 +11,8 @@ import {
     CLOSE_CHECKOUT_MODAL,
     CLOSE_LOGIN_MODAL,
     OPEN_LOGIN_MODAL,
+    STORE_DEPARTMENTS,
+    STORE_CATEGORIES,
 } from './types';
 import TuringAPI from '../../../../api';
 import { KEY_TOKEN } from '../../../../api/config';
@@ -82,6 +84,11 @@ export const clearCategory = () => ({
     type: CLEAR_CATEGORY,
 });
 
+export const storeCategories = (categories) => ({
+    type: STORE_CATEGORIES,
+    payload: { categories },
+});
+
 export const selectDepartment = (department) => ({
     type: SELECT_DEPARTMENT,
     payload: { department },
@@ -89,6 +96,11 @@ export const selectDepartment = (department) => ({
 
 export const clearDepartment = () => ({
     type: CLEAR_DEPARTMENT,
+});
+
+export const storeDepartments = (departments) => ({
+    type: STORE_DEPARTMENTS,
+    payload: { departments },
 });
 
 export const openLoginModal = () => ({

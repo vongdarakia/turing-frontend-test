@@ -11,16 +11,28 @@ import {
     CLOSE_CHECKOUT_MODAL,
     CLOSE_LOGIN_MODAL,
     CLOSE_REGISTER_MODAL,
+    STORE_CATEGORIES,
+    STORE_DEPARTMENTS,
 } from './types';
 
 const main = {
     user: null,
     selectedCategory: null,
     selectedDepartment: null,
+    departments: [],
+    categories: [],
+    isLoginModalOpen: false,
+    isRegisterModalOpen: false,
+    isCheckoutModalOpen: false,
 };
 
 export default (state = main, { type, payload } = {}) => {
     switch (type) {
+        case CLEAR_USER:
+            return {
+                ...state,
+                user: null,
+            };
         case STORE_USER:
             if (payload.user && payload.user.error) {
                 return {
@@ -32,10 +44,15 @@ export default (state = main, { type, payload } = {}) => {
                 ...state,
                 user: { ...payload.user },
             };
-        case CLEAR_USER:
+        case STORE_CATEGORIES:
             return {
                 ...state,
-                user: null,
+                categories: payload.categories || [],
+            };
+        case STORE_DEPARTMENTS:
+            return {
+                ...state,
+                departments: payload.departments || [],
             };
         case SELECT_CATEGORY:
             return {
