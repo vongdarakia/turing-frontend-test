@@ -50,7 +50,7 @@ const Wrapper = styled.div`
     .section-grand-total {
         .col-fee-summary {
             width: fit-content;
-            .topbar {
+            .sub-header {
                 font-size: 20px;
             }
         }
@@ -113,8 +113,7 @@ const Wrapper = styled.div`
         }
         .col-fee-summary {
             text-align: left;
-            .topbar {
-                line-height: unset;
+            .sub-header {
                 padding-left: 18px;
             }
         }
@@ -138,7 +137,9 @@ const ConfirmationViewComponent = (props) => {
         <Wrapper id="confirmation-view" className="checkout-view">
             <div className="row-summary">
                 <div className="section-order-summary">
-                    <div className="topbar summary-header">Order Summary</div>
+                    <div className="sub-header summary-header">
+                        Order Summary
+                    </div>
                     <div className="section-cart-summary">
                         <div className="line-item row-item-header">
                             <div className="col-line-item col-item">Item</div>
@@ -161,7 +162,7 @@ const ConfirmationViewComponent = (props) => {
                     </div>
                 </div>
                 <div className="section-delivery-summary">
-                    <div className="topbar summary-header">Delivery</div>
+                    <div className="sub-header summary-header">Delivery</div>
                     <div className="line-item row-item-header">
                         <div className="col-line-item">Address</div>
                     </div>
@@ -195,14 +196,14 @@ const ConfirmationViewComponent = (props) => {
                         <div className="line-item row-item-header">
                             Sub total
                         </div>
-                        <div className="topbar">{`$${subtotal}`}</div>
+                        <div className="sub-header">{`$${subtotal}`}</div>
                     </div>
 
                     <div className="col-fee-summary">
                         <div className="line-item row-item-header">
                             Shipping fee
                         </div>
-                        <div className="topbar">
+                        <div className="sub-header">
                             {shippingOption.shipping_cost
                                 ? `$${shippingOption.shipping_cost}`
                                 : 'free'}
@@ -215,7 +216,7 @@ const ConfirmationViewComponent = (props) => {
                         <div className="line-item row-item-header">
                             Grand total
                         </div>
-                        <div className="topbar">{`$${grandTotal}`}</div>
+                        <div className="sub-header">{`$${grandTotal}`}</div>
                     </div>
                 </div>
             </div>

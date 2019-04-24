@@ -34,7 +34,7 @@ const Wrapper = styled.div`
     }
 `;
 
-class HomePage extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
 
@@ -90,4 +90,4 @@ export default compose(
         mapDispatchToProps,
     ),
     // withRouter,
-)(HomePage);
+)(Home);

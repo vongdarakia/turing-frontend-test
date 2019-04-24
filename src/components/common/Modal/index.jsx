@@ -10,7 +10,7 @@ const ModalStyle = styled(MainStyles)`
     background-color: white;
     max-width: 760px;
     width: 100%;
-    margin: 48px auto;
+    margin: 24px auto;
 `;
 
 const Modal = (props) => {

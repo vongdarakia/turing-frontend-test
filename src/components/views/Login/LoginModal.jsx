@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 
 import Modal from '../../common/Modal';
 import Login from '.';
-import { closeLoginModal } from '../HomePage/duck/actions';
+import { closeLoginModal } from '../Home/duck/actions';
 
 const StyledModal = styled(Modal)`
     width: 100%;
     max-width: 360px;
-    margin: auto;
 `;
 
 const LoginModal = (props) => {

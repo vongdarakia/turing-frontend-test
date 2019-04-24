@@ -11,7 +11,7 @@ import {
     removeItemFromCart,
 } from './duck/actions';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
-import { closeCheckoutModal as closeCheckoutModalAction } from '../HomePage/duck/actions';
+import { closeCheckoutModal as closeCheckoutModalAction } from '../Home/duck/actions';
 
 class Cart extends Component {
     constructor(props) {

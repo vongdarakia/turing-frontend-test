@@ -1,18 +1,18 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import HomePage from '../components/views/HomePage';
-import ProductDetailPage from '../components/views/ProductDetailPage';
+import Home from '../components/views/Home';
+import ProductDetail from '../components/views/ProductDetail';
 
 const Routes = () => {
     return (
         <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/category/:category" component={HomePage} />
+            <Route exact path="/" component={Home} />
+            <Route path="/category/:category" component={Home} />
             <Route
                 path="/department/:department/category/:category"
-                component={HomePage}
+                component={Home}
             />
-            <Route path="/product/:productId" component={ProductDetailPage} />
+            <Route path="/product/:productId" component={ProductDetail} />
         </Switch>
     );
 };

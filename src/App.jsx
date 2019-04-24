@@ -8,7 +8,7 @@ import './App.css';
 import {
     incrementItemInCart,
     decrementItemInCart,
-    storeCart,
+    storeCart as storeCartAction,
 } from './components/views/Cart/duck/actions';
 import Routes from './routes';
 import history from './routes/history';
@@ -16,7 +16,7 @@ import {
     loginWithFacebook,
     storeDepartments as storeDepartmentsAction,
     storeCategories as storeCategoriesAction,
-} from './components/views/HomePage/duck/actions';
+} from './components/views/Home/duck/actions';
 import { KEY_TOKEN } from './api/config';
 import TuringAPI from './api';
 import { KEY_CART_ID } from './components/views/Cart/duck/types';
@@ -29,7 +29,7 @@ class App extends Component {
     componentDidMount = async () => {
         const {
             user,
-            saveCart,
+            storeCart,
             storeDepartments,
             storeCategories,
         } = this.props;
@@ -48,9 +48,11 @@ class App extends Component {
         // });
 
         // const product = await TuringAPI.getProductDetails({ product_id: 1 });
-        // const cart = await TuringAPI.getCart();
+        const cart = await TuringAPI.getCart();
 
-        // saveCart(cart);
+        // storeCart
+
+        storeCart(cart);
 
         // console.log({ cart, product });
 
@@ -130,7 +132,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     onLoginWithFacebook: loginWithFacebook,
-    saveCart: storeCart,
+    storeCart: storeCartAction,
     storeDepartments: storeDepartmentsAction,
     storeCategories: storeCategoriesAction,
 };

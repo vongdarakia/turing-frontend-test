@@ -138,7 +138,7 @@ class ProductCard extends Component {
                     <div className="product-image-container">
                         <img src={getProductImageUrl(product)} alt={name} />
                     </div>
-                    <div className="topbar product-name">{name}</div>
+                    <div className="sub-header product-name">{name}</div>
                     <div
                         className={`section-price ${
                             hasDiscount ? 'has-discount' : ''

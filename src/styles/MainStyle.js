@@ -44,6 +44,13 @@ const MainStyles = styled.div`
         line-height: 240%;
     }
 
+    .sub-header {
+        font-family: ${SECONDARY_FONT_FAMILY};
+        font-weight: 600;
+        font-size: 15px;
+        color: #2e2e2e;
+    }
+
     .facebook-auto-login {
         display: none;
     }

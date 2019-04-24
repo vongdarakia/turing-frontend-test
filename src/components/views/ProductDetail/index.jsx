@@ -10,7 +10,7 @@ import {
     addItemsToCart,
 } from '../Cart/duck/actions';
 
-class ProductDetailPage extends Component {
+class ProductDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -63,4 +63,4 @@ export default compose(
         mapDispatchToProps,
     ),
     withRouter,
-)(ProductDetailPage);
+)(ProductDetail);

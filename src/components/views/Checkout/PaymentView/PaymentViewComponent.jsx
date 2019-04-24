@@ -57,7 +57,7 @@ const Wrapper = styled.div`
 const PaymentViewComponent = () => {
     return (
         <Wrapper id="payment-view" className="checkout-view">
-            <div className="topbar">Enter your payment information</div>
+            <div className="sub-header">Enter your payment information</div>
             <CardElement style={stripeCardStyle} />
         </Wrapper>
     );

@@ -7,7 +7,7 @@ import LoginComponent from './LoginComponent';
 import {
     login as loginAction,
     loginWithFacebook as loginWithFacebookAction,
-} from '../HomePage/duck/actions';
+} from '../Home/duck/actions';
 
 class Login extends Component {
     handleLogin = async ({ email, password }) => {

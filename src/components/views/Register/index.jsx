@@ -7,7 +7,7 @@ import RegisterComponent from './RegisterComponent';
 import {
     registerAccount as registerAccountAction,
     loginWithFacebook as loginWithFacebookAction,
-} from '../HomePage/duck/actions';
+} from '../Home/duck/actions';
 
 class Register extends Component {
     handleRegister = async ({ name, email, password }) => {

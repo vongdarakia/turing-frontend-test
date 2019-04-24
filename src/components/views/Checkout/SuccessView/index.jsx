@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import SuccessViewComponent from './SuccessViewComponent';
-import { closeCheckoutModal as closeCheckoutModalAction } from '../../HomePage/duck/actions';
+import { closeCheckoutModal as closeCheckoutModalAction } from '../../Home/duck/actions';
 
 const SuccessView = (props) => {
     const { className, closeCheckoutModal } = props;

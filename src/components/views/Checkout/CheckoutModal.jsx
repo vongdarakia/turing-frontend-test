@@ -8,7 +8,7 @@ import Icon from '@material-ui/core/Icon';
 
 import Modal from '../../common/Modal';
 import Checkout from '.';
-import { closeCheckoutModal } from '../HomePage/duck/actions';
+import { closeCheckoutModal } from '../Home/duck/actions';
 
 const Wrapper = styled.div`
     position: relative;
