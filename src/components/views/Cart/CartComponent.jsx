@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
 import getItemImageUrlByName from '../../../utils/get-item-image-url';
+import getCartItemKey from '../../../utils/get-cart-item-key';
 
 const Wrapper = styled.div`
     padding-top: 24px;
@@ -137,104 +138,81 @@ const Wrapper = styled.div`
     }
 `;
 
-class CartComponent extends Component {
-    constructor(props) {
-        super(props);
+const CartComponent = (props) => {
+    const { cart = [], onRemoveItemFromCart, onRemoveItem, onAddItem } = props;
 
-        this.state = {};
-    }
-
-    render() {
-        const {
-            cart = [],
-            onRemoveItemFromCart,
-            onRemoveItem,
-            onAddItem,
-        } = this.props;
-
-        if (cart.length === 0) {
-            return (
-                <Wrapper className="section-cart checkout-view">
-                    <h1 className="cart-title cart-empty">Empty Cart</h1>
-                </Wrapper>
-            );
-        }
-
+    if (cart.length === 0) {
         return (
             <Wrapper className="section-cart checkout-view">
-                <h2 className="cart-title">{cart.length} Items In Your Cart</h2>
-                <div className="line-item row-item-header">
-                    <div className="col-line-item col-item">Item</div>
-                    <div className="col-line-item col-attributes">
-                        Attributes
-                    </div>
-                    <div className="col-line-item col-quantity">Quantity</div>
-                    <div className="col-line-item col-price">Price</div>
-                </div>
-                <hr />
-                {cart.map((lineItem) => (
-                    <div key={lineItem.name} className="line-item">
-                        <div className="col-line-item col-item">
-                            <div className="item">
-                                <div className="item-image">
-                                    <img
-                                        src={getItemImageUrlByName(
-                                            lineItem.name,
-                                        )}
-                                        alt={lineItem.name}
-                                    />
-                                </div>
-                                <div className="item-info">
-                                    <h3 className="item-name">
-                                        {lineItem.name}
-                                    </h3>
-                                    <div
-                                        className="btn-remove"
-                                        onClick={() => {
-                                            onRemoveItemFromCart(lineItem.name);
-                                        }}
-                                    >
-                                        <Icon className="icon">clear_icon</Icon>
-                                        Remove
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-line-item col-attributes">
-                            {lineItem.attributes}
-                        </div>
-                        <div className="col-line-item col-quantity">
-                            <Fab
-                                aria-label="Remove"
-                                className="btn-quantity"
-                                size="small"
-                                onClick={() => onRemoveItem(lineItem.name)}
-                            >
-                                <Icon className="icon">remove_icon</Icon>
-                            </Fab>
-                            <div className="quantity-box">
-                                {lineItem.quantity}
-                            </div>
-                            <Fab
-                                aria-label="Add"
-                                className="btn-quantity"
-                                size="small"
-                                onClick={() => onAddItem(lineItem.name)}
-                            >
-                                <Icon className="icon">add_icon</Icon>
-                            </Fab>
-                        </div>
-                        <div className="col-line-item col-price col-price-value">
-                            {`$${(lineItem.price * lineItem.quantity).toFixed(
-                                2,
-                            )}`}
-                        </div>
-                    </div>
-                ))}
+                <h1 className="cart-title cart-empty">Empty Cart</h1>
             </Wrapper>
         );
     }
-}
+
+    return (
+        <Wrapper className="section-cart checkout-view">
+            <h2 className="cart-title">{cart.length} Items In Your Cart</h2>
+            <div className="line-item row-item-header">
+                <div className="col-line-item col-item">Item</div>
+                <div className="col-line-item col-attributes">Attributes</div>
+                <div className="col-line-item col-quantity">Quantity</div>
+                <div className="col-line-item col-price">Price</div>
+            </div>
+            <hr />
+            {cart.map((lineItem) => (
+                <div key={getCartItemKey(lineItem)} className="line-item">
+                    <div className="col-line-item col-item">
+                        <div className="item">
+                            <div className="item-image">
+                                <img
+                                    src={getItemImageUrlByName(lineItem.name)}
+                                    alt={lineItem.name}
+                                />
+                            </div>
+                            <div className="item-info">
+                                <h3 className="item-name">{lineItem.name}</h3>
+                                <div
+                                    className="btn-remove"
+                                    onClick={() => {
+                                        onRemoveItemFromCart(lineItem);
+                                    }}
+                                >
+                                    <Icon className="icon">clear_icon</Icon>
+                                    Remove
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-line-item col-attributes">
+                        {lineItem.attributes}
+                    </div>
+                    <div className="col-line-item col-quantity">
+                        <Fab
+                            aria-label="Remove"
+                            className="btn-quantity"
+                            size="small"
+                            onClick={() => onRemoveItem(lineItem)}
+                        >
+                            <Icon className="icon">remove_icon</Icon>
+                        </Fab>
+                        <div className="quantity-box">{lineItem.quantity}</div>
+                        <Fab
+                            aria-label="Add"
+                            className="btn-quantity"
+                            size="small"
+                            onClick={() => onAddItem(lineItem)}
+                        >
+                            <Icon className="icon">add_icon</Icon>
+                        </Fab>
+                    </div>
+                    <div className="col-line-item col-price col-price-value">
+                        {`$${(lineItem.price * lineItem.quantity).toFixed(2)}`}
+                    </div>
+                </div>
+            ))}
+        </Wrapper>
+    );
+};
 
 CartComponent.propTypes = {
     cart: PropTypes.arrayOf(

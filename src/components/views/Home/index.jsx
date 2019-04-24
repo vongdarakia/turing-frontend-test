@@ -36,12 +36,6 @@ const Wrapper = styled.div`
 `;
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
     componentDidMount = async () => {
         const token = window.localStorage[KEY_TOKEN];
         const { loadUser } = this.props;

@@ -6,9 +6,9 @@ import { compose } from 'redux';
 import CartComponent from './CartComponent';
 import ViewFooter from '../../common/ViewFooter';
 import {
-    incrementItemInCart,
-    decrementItemInCart,
-    removeItemFromCart,
+    incrementItemInCart as incrementItemInCartAction,
+    decrementItemInCart as decrementItemInCartAction,
+    removeItemFromCart as removeItemFromCartAction,
 } from './duck/actions';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
 import { closeCheckoutModal as closeCheckoutModalAction } from '../Home/duck/actions';
@@ -48,9 +48,9 @@ class Cart extends Component {
         const {
             className,
             cart,
-            increaseItemInCart,
-            decreaseItemInCart,
-            deleteItem,
+            incrementItemInCart,
+            decrementItemInCart,
+            removeItemFromCart,
         } = this.props;
         const { btnPropsPrimary, btnPropsSecondary } = this.state;
 
@@ -58,9 +58,9 @@ class Cart extends Component {
             <div className={className}>
                 <CartComponent
                     cart={cart}
-                    onRemoveItemFromCart={deleteItem}
-                    onRemoveItem={decreaseItemInCart}
-                    onAddItem={increaseItemInCart}
+                    onRemoveItemFromCart={removeItemFromCart}
+                    onRemoveItem={decrementItemInCart}
+                    onAddItem={incrementItemInCart}
                 />
                 <ViewFooter
                     labelPrimary="Checkout"
@@ -83,10 +83,10 @@ Cart.propTypes = {
             attributes: PropTypes.string,
         }),
     ).isRequired,
-    increaseItemInCart: PropTypes.func.isRequired,
-    decreaseItemInCart: PropTypes.func.isRequired,
+    incrementItemInCart: PropTypes.func.isRequired,
+    decrementItemInCart: PropTypes.func.isRequired,
     closeCheckoutModal: PropTypes.func.isRequired,
-    deleteItem: PropTypes.func.isRequired,
+    removeItemFromCart: PropTypes.func.isRequired,
     onClickNext: PropTypes.func.isRequired,
 };
 
@@ -99,9 +99,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    increaseItemInCart: incrementItemInCart,
-    decreaseItemInCart: decrementItemInCart,
-    deleteItem: removeItemFromCart,
+    incrementItemInCart: incrementItemInCartAction,
+    decrementItemInCart: decrementItemInCartAction,
+    removeItemFromCart: removeItemFromCartAction,
     closeCheckoutModal: closeCheckoutModalAction,
 };
 
