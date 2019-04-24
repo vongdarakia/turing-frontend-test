@@ -134,10 +134,10 @@ class ProductList extends Component {
 ProductList.propTypes = {
     openProductDetailModal: PropTypes.func.isRequired,
     selectedCategory: PropTypes.shape({
-        category_id: PropTypes.string,
+        category_id: PropTypes.number,
     }),
     selectedDepartment: PropTypes.shape({
-        department_id: PropTypes.string,
+        department_id: PropTypes.number,
     }),
 };
 

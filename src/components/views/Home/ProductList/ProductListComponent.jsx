@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ProductCard from '../../../common/ProductCard';
+import { PRIMARY_COLOR } from '../../../../styles/settings';
 
 const Wrapper = styled.div`
     flex: 1;
@@ -13,6 +14,14 @@ const Wrapper = styled.div`
         .page-number {
             padding: 8px;
             cursor: pointer;
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            margin: 0 6px;
+            outline: none;
+            :hover {
+                color: ${PRIMARY_COLOR};
+            }
         }
         .current-page {
             color: red;
