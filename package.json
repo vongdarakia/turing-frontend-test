@@ -2,7 +2,7 @@
     "name": "front-end-ecommerce",
     "version": "0.1.0",
     "private": true,
-    "homepage": "http://vongdarakia.github.io/turing-frontend-test ",
+    "homepage": "https://vongdarakia.github.io/turing-frontend-test ",
     "dependencies": {
         "@material-ui/core": "^3.9.3",
         "add": "^2.0.6",
