@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CardElement } from 'react-stripe-elements';
 import { PRIMARY_FONT_FAMILY } from '../../../../styles/settings';
@@ -67,6 +68,14 @@ const PaymentViewComponent = (props) => {
             {error && <small className="error">{error}</small>}
         </Wrapper>
     );
+};
+
+PaymentViewComponent.propTypes = {
+    error: PropTypes.string,
+};
+
+PaymentViewComponent.defaultProps = {
+    error: undefined,
 };
 
 export default PaymentViewComponent;

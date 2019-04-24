@@ -196,7 +196,7 @@ class DeliverView extends Component {
         } = this.props;
 
         if (user) {
-            const response = await TuringAPI.updateCustomerAddress({
+            await TuringAPI.updateCustomerAddress({
                 address_1: address || user.address_1,
                 city: city || user.city,
                 region: state || user.region,

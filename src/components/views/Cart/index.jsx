@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectStripe } from 'react-stripe-elements';
 
 import CartComponent from './CartComponent';
 import ViewFooter from '../../common/ViewFooter';
@@ -73,8 +73,28 @@ class Cart extends Component {
     }
 }
 
+Cart.propTypes = {
+    className: PropTypes.string,
+    cart: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.string,
+            quantity: PropTypes.number,
+            attributes: PropTypes.string,
+        }),
+    ).isRequired,
+    increaseItemInCart: PropTypes.func.isRequired,
+    decreaseItemInCart: PropTypes.func.isRequired,
+    closeCheckoutModal: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
+    onClickNext: PropTypes.func.isRequired,
+};
+
+Cart.defaultProps = {
+    className: undefined,
+};
+
 const mapStateToProps = (state) => ({
-    user: state.main.user,
     cart: getCartLineItemsFromTable(state.cart),
 });
 

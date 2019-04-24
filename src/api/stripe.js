@@ -1,5 +1,4 @@
-import { getBasicHeaders, getAuthHeaders, apiUrl } from './config';
-import prepareRequestParams from '../utils/prepare-request-params';
+import { getBasicHeaders, apiUrl } from './config';
 import prepareRequestBody from '../utils/prepare-request-body';
 
 export default {

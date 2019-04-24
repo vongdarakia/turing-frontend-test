@@ -18,12 +18,7 @@ import GlobalStyle from './styles/GlobalStyle';
 
 class App extends Component {
     componentDidMount = async () => {
-        const {
-            user,
-            storeCart,
-            storeDepartments,
-            storeCategories,
-        } = this.props;
+        const { storeCart, storeDepartments, storeCategories } = this.props;
 
         const cart = await TuringAPI.getCart();
         storeCart(cart);

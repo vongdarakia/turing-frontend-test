@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectStripe } from 'react-stripe-elements';
@@ -86,8 +87,6 @@ class PaymentView extends Component {
             } else {
                 this.setState({ error: error.message });
             }
-
-            return { error };
         }
     };
 
@@ -111,6 +110,38 @@ class PaymentView extends Component {
         );
     }
 }
+
+PaymentView.propTypes = {
+    className: PropTypes.string,
+    stripe: PropTypes.object,
+    onClickBack: PropTypes.func,
+    onSuccess: PropTypes.func,
+    onFailure: PropTypes.func,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    address: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipCode: PropTypes.string,
+    country: PropTypes.string,
+    shippingOptionId: PropTypes.number,
+};
+
+PaymentView.defaultProps = {
+    className: undefined,
+    stripe: undefined,
+    onClickBack: undefined,
+    onSuccess: undefined,
+    onFailure: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    address: undefined,
+    city: undefined,
+    state: undefined,
+    zipCode: undefined,
+    country: undefined,
+    shippingOptionId: undefined,
+};
 
 const mapStateToProps = (state) => ({
     user: state.main.user,
