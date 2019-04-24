@@ -204,7 +204,6 @@ class DeliverView extends Component {
                 country: country || user.country,
                 shipping_region_id: user.shipping_region_id,
             });
-            console.log(response);
         }
 
         onClickNext();
@@ -358,7 +357,7 @@ const mapStateToProps = ({ checkout, main: { user } }) => {
         postal_code: userZipCode,
         country: userCountry,
     } = user || {};
-    const [userFirstName, userLastName] = userName;
+    const [userFirstName, userLastName] = userName.split(' ');
 
     return {
         firstName: checkout.firstName || userFirstName,

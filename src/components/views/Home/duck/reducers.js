@@ -13,17 +13,21 @@ import {
     CLOSE_REGISTER_MODAL,
     STORE_CATEGORIES,
     STORE_DEPARTMENTS,
+    CLOSE_PRODUCT_DETAIL_MODAL,
+    OPEN_PRODUCT_DETAIL_MODAL,
 } from './types';
 
 const main = {
     user: null,
     selectedCategory: null,
     selectedDepartment: null,
+    selectedProductId: undefined,
     departments: [],
     categories: [],
     isLoginModalOpen: false,
     isRegisterModalOpen: false,
     isCheckoutModalOpen: false,
+    isProductDetailModalOpen: false,
 };
 
 export default (state = main, { type, payload } = {}) => {
@@ -90,7 +94,12 @@ export default (state = main, { type, payload } = {}) => {
                 ...state,
                 isRegisterModalOpen: true,
             };
-
+        case OPEN_PRODUCT_DETAIL_MODAL:
+            return {
+                ...state,
+                isProductDetailModalOpen: true,
+                selectedProductId: payload.productId,
+            };
         case CLOSE_CHECKOUT_MODAL:
             return {
                 ...state,
@@ -105,6 +114,11 @@ export default (state = main, { type, payload } = {}) => {
             return {
                 ...state,
                 isRegisterModalOpen: false,
+            };
+        case CLOSE_PRODUCT_DETAIL_MODAL:
+            return {
+                ...state,
+                isProductDetailModalOpen: false,
             };
         default:
             return state;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ProductCard from '../../../common/ProductCard';
 
@@ -39,6 +40,7 @@ const ProductListComponent = (props) => {
         page,
         pageLimit = 20,
         onChangePage,
+        onClickQuickView,
     } = props;
     const numPages = Math.ceil(totalProducts / pageLimit);
     const pages = [];
@@ -66,11 +68,38 @@ const ProductListComponent = (props) => {
             <div className="product-list-pagination">{pages}</div>
             <div className="product-list">
                 {products.map((product) => (
-                    <ProductCard key={product.product_id} product={product} />
+                    <ProductCard
+                        key={product.product_id}
+                        product={product}
+                        onClickQuickView={() => {
+                            onClickQuickView(product.product_id);
+                        }}
+                    />
                 ))}
             </div>
         </Wrapper>
     );
+};
+
+ProductListComponent.propTypes = {
+    products: PropTypes.arrayOf(
+        PropTypes.shape({
+            product_id: PropTypes.number,
+            name: PropTypes.string,
+            price: PropTypes.string,
+        }),
+    ).isRequired,
+    totalProducts: PropTypes.number.isRequired,
+    className: PropTypes.string,
+    page: PropTypes.number.isRequired,
+    pageLimit: PropTypes.number,
+    onChangePage: PropTypes.func.isRequired,
+    onClickQuickView: PropTypes.func.isRequired,
+};
+
+ProductListComponent.defaultProps = {
+    className: '',
+    pageLimit: 20,
 };
 
 export default ProductListComponent;

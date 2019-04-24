@@ -13,6 +13,8 @@ import {
     OPEN_LOGIN_MODAL,
     STORE_DEPARTMENTS,
     STORE_CATEGORIES,
+    OPEN_PRODUCT_DETAIL_MODAL,
+    CLOSE_PRODUCT_DETAIL_MODAL,
 } from './types';
 import TuringAPI from '../../../../api';
 import { KEY_TOKEN } from '../../../../api/config';
@@ -43,9 +45,9 @@ export const registerAccount = ({ name, email, password }) => async (
 export const login = ({ email, password }) => async (dispatch) => {
     const response = await TuringAPI.login({ email, password });
 
-    if (response.user) {
+    if (response.customer) {
         window.localStorage[KEY_TOKEN] = response.accessToken;
-        dispatch(storeUser({ user: response.user }));
+        dispatch(storeUser({ user: response.customer }));
     }
     return response;
 };
@@ -125,4 +127,13 @@ export const openCheckoutModal = () => ({
 
 export const closeCheckoutModal = () => ({
     type: CLOSE_CHECKOUT_MODAL,
+});
+
+export const openProductDetailModal = (productId) => ({
+    type: OPEN_PRODUCT_DETAIL_MODAL,
+    payload: { productId },
+});
+
+export const closeProductDetailModal = () => ({
+    type: CLOSE_PRODUCT_DETAIL_MODAL,
 });

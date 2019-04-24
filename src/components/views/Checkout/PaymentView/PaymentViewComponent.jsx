@@ -52,13 +52,19 @@ const Wrapper = styled.div`
     .StripeElement--webkit-autofill {
         background-color: #fefde5 !important;
     }
+
+    .error {
+        color: #f44336;
+    }
 `;
 
-const PaymentViewComponent = () => {
+const PaymentViewComponent = (props) => {
+    const { error } = props;
     return (
         <Wrapper id="payment-view" className="checkout-view">
             <div className="sub-header">Enter your payment information</div>
             <CardElement style={stripeCardStyle} />
+            {error && <small className="error">{error}</small>}
         </Wrapper>
     );
 };

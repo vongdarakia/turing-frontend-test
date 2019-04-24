@@ -50,7 +50,6 @@ class PaymentView extends Component {
             });
 
             if (error) {
-                console.log(error);
                 throw new Error(error.message);
             }
 
@@ -74,25 +73,34 @@ class PaymentView extends Component {
                 amount: Math.floor(parseFloat(order.total_amount) * 100),
                 description: `Ordered on ${order.created_on}`,
             });
-            console.log(result);
+
             if (result.error) {
                 onFailure(result.error);
-                throw new Error(result.error);
+                throw new Error(result.error.message);
             } else {
                 onSuccess();
             }
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            if (error.message.includes('Unauthorized')) {
+                this.setState({ error: 'Please log in to check out' });
+            } else {
+                this.setState({ error: error.message });
+            }
+
+            return { error };
         }
     };
 
     render() {
         const { className } = this.props;
-        const { btnPropsPrimary, btnPropsSecondary } = this.state;
+        const { btnPropsPrimary, btnPropsSecondary, error } = this.state;
 
         return (
             <div className={className}>
-                <PaymentViewComponent onCheckout={this.handleCheckout} />
+                <PaymentViewComponent
+                    onCheckout={this.handleCheckout}
+                    error={error}
+                />
                 <ViewFooter
                     labelPrimary="Pay"
                     labelSecondary="Back"

@@ -78,6 +78,7 @@ const Wrapper = styled.div`
 
         .col-line-item {
             text-align: center;
+            padding: 0 4px;
         }
 
         .col-item {

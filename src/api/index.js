@@ -9,6 +9,7 @@ import shoppingCart from './shopping-cart';
 import stripe from './stripe';
 import taxes from './taxes';
 import shipping from './shipping';
+import attributes from './attributes';
 
 const memoizeFunctions = (functionsTable, restrictedFunctions = []) => {
     const memoizedFunctionsTable = {};
@@ -30,11 +31,12 @@ const memoizeFunctions = (functionsTable, restrictedFunctions = []) => {
 // API calls that will return data that most likely won't be different
 // within the user's session
 const staticApiCalls = {
+    ...attributes,
     ...categories,
     ...departments,
     ...products,
-    ...taxes,
     ...shipping,
+    ...taxes,
 };
 
 // Spreading the Static API call first so that the IDE can pick up what functions are

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ProductListComponent from './ProductListComponent';
 import TuringAPI from '../../../../api';
+import { openProductDetailModal as openProductDetailModalAction } from '../duck/actions';
 
 class ProductList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            totalProducts: [],
+            totalProducts: 0,
             page: 1,
         };
     }
@@ -110,22 +112,39 @@ class ProductList extends Component {
         const { department_id } = selectedDepartment || {};
 
         this.setState({ page });
-        console.log({ page, category_id, department_id });
         this.loadProducts({ page, category_id, department_id });
     };
 
     render() {
         const { page, products, totalProducts } = this.state;
+        const { openProductDetailModal } = this.props;
+
         return (
             <ProductListComponent
                 onChangePage={this.handleChangePage}
                 page={page}
                 products={products}
                 totalProducts={totalProducts}
+                onClickQuickView={openProductDetailModal}
             />
         );
     }
 }
+
+ProductList.propTypes = {
+    openProductDetailModal: PropTypes.func.isRequired,
+    selectedCategory: PropTypes.shape({
+        category_id: PropTypes.string,
+    }),
+    selectedDepartment: PropTypes.shape({
+        department_id: PropTypes.string,
+    }),
+};
+
+ProductList.defaultProps = {
+    selectedCategory: undefined,
+    selectedDepartment: undefined,
+};
 
 const mapStateToProps = (state) => ({
     selectedDepartment: state.main.selectedDepartment,
@@ -133,7 +152,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    // onSelectDepartment: selectDepartment,
+    openProductDetailModal: openProductDetailModalAction,
 };
 
 export default connect(

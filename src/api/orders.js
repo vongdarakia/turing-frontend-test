@@ -16,7 +16,6 @@ export default {
             });
 
             const result = await response.json();
-            console.log({ result });
             return result;
         } catch (error) {
             return { error };
@@ -30,7 +29,6 @@ export default {
                 headers: getAuthHeaders(),
             });
             const result = await response.json();
-            console.log({ result });
             return result;
         } catch (error) {
             return { error };
@@ -44,7 +42,6 @@ export default {
                 headers: getAuthHeaders(),
             });
             const result = await response.json();
-            console.log({ result });
             return result;
         } catch (error) {
             return { error };
@@ -61,7 +58,6 @@ export default {
                 },
             );
             const result = await response.json();
-            console.log({ result });
             return result;
         } catch (error) {
             return { error };

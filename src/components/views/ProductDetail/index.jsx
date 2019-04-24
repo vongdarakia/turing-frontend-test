@@ -1,60 +1,172 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import ProductDetailComponent from './ProductDetailComponent';
 import TuringAPI from '../../../api';
-import {
-    incrementItemInCart,
-    updateItemInCart,
-    addItemsToCart,
-} from '../Cart/duck/actions';
+import { addItemsToCart as addItemsToCartAction } from '../Cart/duck/actions';
+import { closeProductDetailModal as closeProductDetailModalAction } from '../Home/duck/actions';
 
 class ProductDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             product: undefined,
-            quantity: 1,
+            sizeAttributes: [],
+            colorAttributes: [],
+            categories: [],
+            selectedColorAttribute: {},
+            selectedSizeAttribute: {},
+            rating: 0,
+            loading: true,
         };
     }
 
-    handleAddToCart = () => {
-        const { addToCart } = this.props;
-        const { product, quantity } = this.state;
-
-        addToCart(product, quantity);
+    componentDidMount = async () => {
+        const { productId } = this.props;
+        this.loadProduct(productId);
     };
 
-    componentDidMount = async () => {
-        const {
-            match: { params: { productId: product_id } = {} } = {},
-        } = this.props;
-        const product = await TuringAPI.getProductById({ product_id });
+    componentWillReceiveProps(nextProps) {
+        const { productId: nextProductId } = nextProps;
+        const { productId: prevProductId } = this.props;
 
-        this.setState({ product });
+        if (nextProductId !== prevProductId) {
+            this.loadProduct(nextProductId);
+        }
+    }
+
+    loadProduct = async (product_id) => {
+        try {
+            this.setState({ loading: true });
+            const product = await TuringAPI.getProductById({ product_id });
+            if (product.error) {
+                throw new Error(product.error.message);
+            }
+
+            this.setState({ product });
+
+            const attributes = await TuringAPI.getAttributesByProductId({
+                product_id,
+            });
+
+            if (attributes.error) {
+                throw new Error(attributes.error.message);
+            }
+
+            const colorAttributes = attributes.filter(
+                ({ attribute_name }) => attribute_name === 'Color',
+            );
+
+            const sizeAttributes = attributes.filter(
+                ({ attribute_name }) => attribute_name === 'Size',
+            );
+
+            this.setState({ sizeAttributes, colorAttributes });
+
+            const categories = await TuringAPI.getCategoriesByProduct({
+                product_id,
+            });
+
+            if (categories.error) {
+                throw new Error(categories.error.message);
+            }
+
+            this.setState({ categories: categories.map(({ name }) => name) });
+
+            const reviews = await TuringAPI.getProductReviews({ product_id });
+
+            if (reviews.error) {
+                throw new Error(reviews.error.message);
+            }
+
+            let avgRating = 0;
+
+            reviews.forEach((review) => {
+                avgRating += review.rating;
+            });
+
+            avgRating /= reviews.length;
+
+            this.setState({ rating: Math.floor(avgRating) });
+        } catch (error) {
+            this.setState({ error: error.message });
+        } finally {
+            this.setState({ loading: false });
+        }
+    };
+
+    handleAddToCart = async () => {
+        const { addItemsToCart, closeProductDetailModal } = this.props;
+        const {
+            product,
+            selectedSizeAttribute: { attribute_value: size = '' } = {},
+            selectedColorAttribute: { attribute_value: color = '' } = {},
+        } = this.state;
+
+        const cart_id = await TuringAPI.getCartId();
+
+        const { error } = addItemsToCart({
+            cart_id,
+            product_id: product.product_id,
+            attributes: `${size}, ${color}`,
+        });
+
+        if (!error) {
+            closeProductDetailModal();
+        }
+    };
+
+    setSize = (selectedSizeAttribute) => {
+        this.setState({ selectedSizeAttribute });
+    };
+
+    setColor = (selectedColorAttribute) => {
+        this.setState({ selectedColorAttribute });
     };
 
     render() {
-        const { product } = this.state;
-        console.log(this.props);
+        const {
+            product,
+            sizeAttributes,
+            colorAttributes,
+            categories,
+            selectedColorAttribute,
+            selectedSizeAttribute,
+            rating,
+            loading,
+        } = this.state;
+
         return (
             <ProductDetailComponent
-                {...this.props}
                 product={product}
-                onAddToCart={this.handleAddToCart}
+                onClickAddToCart={this.handleAddToCart}
+                sizeAttributes={sizeAttributes}
+                colorAttributes={colorAttributes}
+                categories={categories}
+                onClickSize={this.setSize}
+                onClickColor={this.setColor}
+                selectedColorAttribute={selectedColorAttribute}
+                selectedSizeAttribute={selectedSizeAttribute}
+                rating={rating}
+                loading={loading}
             />
         );
     }
 }
 
-const mapStateToProps = () => ({
-    // cart: Object.keys(state.cart).map((key) => state.cart[key]),
-});
+ProductDetail.propTypes = {
+    addItemsToCart: PropTypes.func.isRequired,
+    closeProductDetailModal: PropTypes.func.isRequired,
+    productId: PropTypes.number.isRequired,
+};
+
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
-    // onUpdateItemInCart:,
-    addToCart: addItemsToCart,
+    addItemsToCart: addItemsToCartAction,
+    closeProductDetailModal: closeProductDetailModalAction,
 };
 
 export default compose(

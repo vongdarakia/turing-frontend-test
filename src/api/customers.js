@@ -45,9 +45,9 @@ export default {
                     mob_phone,
                 }),
             });
-            console.log(response);
+            return response;
         } catch (error) {
-            console.log(error);
+            return { error };
         }
     },
 
@@ -58,7 +58,7 @@ export default {
                 headers: getBasicHeaders(),
                 body: prepareRequestBody({ name, email, password }),
             });
-            console.log(response);
+
             return response.json();
         } catch (error) {
             return { error };
@@ -72,7 +72,7 @@ export default {
                 headers: getBasicHeaders(),
                 body: prepareRequestBody({ email, password }),
             });
-            console.log(response);
+
             return response.json();
         } catch (error) {
             return { error };
@@ -112,14 +112,6 @@ export default {
                 country === undefined ||
                 shipping_region_id === undefined
             ) {
-                console.log({
-                    address_1,
-                    city,
-                    region,
-                    postal_code,
-                    country,
-                    shipping_region_id,
-                });
                 throw new Error(
                     'address_1, city, region, postal_code, country and shipping_region_id are required to update address',
                 );
@@ -140,7 +132,6 @@ export default {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (result.error) {
                 throw new Error(result.error.message);
@@ -148,7 +139,7 @@ export default {
 
             return result;
         } catch (error) {
-            console.log(error);
+            return { error };
         }
     },
 
@@ -167,9 +158,9 @@ export default {
                     credit_card,
                 }),
             });
-            console.log(response);
+            return response;
         } catch (error) {
-            console.log(error);
+            return { error };
         }
     },
 };

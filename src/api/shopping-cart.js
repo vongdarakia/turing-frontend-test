@@ -20,7 +20,7 @@ const generateCartId = async () => {
     }
 };
 
-const addItemToCart = async ({ cart_id, product_id, attributes = [] }) => {
+const addItemToCart = async ({ cart_id, product_id, attributes = '' }) => {
     try {
         const response = await fetch(`${apiUrl}/shoppingcart/add`, {
             method: 'post',
@@ -28,7 +28,7 @@ const addItemToCart = async ({ cart_id, product_id, attributes = [] }) => {
             body: prepareRequestBody({
                 cart_id,
                 product_id,
-                attributes: attributes.join(', '),
+                attributes,
             }),
         });
         const lineItems = response.json();

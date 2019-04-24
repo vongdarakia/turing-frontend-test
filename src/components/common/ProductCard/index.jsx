@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -113,6 +114,7 @@ class ProductCard extends Component {
 
     render() {
         const {
+            onClickQuickView,
             product: { name, price, discounted_price } = {},
             product,
         } = this.props;
@@ -130,7 +132,7 @@ class ProductCard extends Component {
         return (
             <StyledPaper
                 elevation={elevation}
-                onMouseEnter={this.handleMouseOver}
+                onMouseOver={this.handleMouseOver}
                 onMouseLeave={this.handleMouseOut}
                 className="product-card"
             >
@@ -156,7 +158,10 @@ class ProductCard extends Component {
                     }`}
                 />
                 <div className={`quick-view-cover ${mouseOver ? '' : 'hide'}`}>
-                    <Button className="primary btn-quick-view">
+                    <Button
+                        className="primary btn-quick-view"
+                        onClick={onClickQuickView}
+                    >
                         Quick View
                     </Button>
                 </div>
@@ -172,6 +177,7 @@ ProductCard.propTypes = {
         price: PropTypes.string,
         discounted_price: PropTypes.string,
     }).isRequired,
+    onClickQuickView: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

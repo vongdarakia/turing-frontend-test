@@ -14,7 +14,7 @@ class Login extends Component {
         const { login, onLogin } = this.props;
         const response = await login({ email, password });
 
-        if (response.user) {
+        if (response.customer) {
             onLogin();
         }
     };

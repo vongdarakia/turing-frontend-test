@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,7 +13,6 @@ import {
     loginWithFacebook,
 } from './duck/actions';
 import { KEY_TOKEN } from '../../../api/config';
-import TuringAPI from '../../../api';
 import getCartLineItemsFromTable from '../../../utils/get-cart-line-items';
 import LoginModal from '../Login/LoginModal';
 import RegisterModal from '../Register/RegisterModal';
@@ -21,6 +21,7 @@ import UserHeader from './UserHeader';
 import ShopmateHeader from './ShopmateHeader';
 import CategoryList from './CategoryList';
 import ProductList from './ProductList';
+import ProductDetailModal from '../ProductDetail/ProductDetailModal';
 
 const Wrapper = styled.div`
     .main-content {
@@ -43,10 +44,10 @@ class Home extends Component {
 
     componentDidMount = async () => {
         const token = window.localStorage[KEY_TOKEN];
-        const { fetchUser } = this.props;
+        const { loadUser } = this.props;
 
         if (token) {
-            fetchUser();
+            loadUser();
         }
     };
 
@@ -56,6 +57,7 @@ class Home extends Component {
                 <LoginModal />
                 <RegisterModal />
                 <CheckoutModal />
+                <ProductDetailModal />
 
                 <UserHeader />
                 <ShopmateHeader />
@@ -69,6 +71,10 @@ class Home extends Component {
     }
 }
 
+Home.propTypes = {
+    loadUser: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
     cart: getCartLineItemsFromTable(state.cart),
     user: state.main.user,
@@ -77,7 +83,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     incrementItemInCart,
     decrementItemInCart,
-    fetchUser: getCustomer,
+    loadUser: getCustomer,
     onRegister: registerAccount,
     onLogin: login,
     onLoginWithFacebook: loginWithFacebook,

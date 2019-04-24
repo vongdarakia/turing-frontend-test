@@ -4,6 +4,7 @@ import {
     UPDATE_ITEM_AMOUNT_IN_CART,
     STORE_CART,
     REMOVE_ITEM_FROM_CART,
+    CLEAR_CART,
 } from './types';
 import TuringAPI from '../../../../api';
 
@@ -12,6 +13,10 @@ let timeout;
 export const storeCart = (cart) => ({
     type: STORE_CART,
     payload: { cart },
+});
+
+export const clearCart = () => ({
+    type: CLEAR_CART,
 });
 
 export const addItemsToCart = ({ cart_id, product_id, attributes }) => async (
@@ -58,8 +63,9 @@ export const incrementItemInCart = (name) => async (dispatch) => {
         type: INCREMENT_ITEM_IN_CART,
         payload: { name },
     });
-
-    timeout = setTimeout(() => dispatch(saveCart()), 3000);
+    // saves the cart only after the user is done incrementing to
+    // have a smoother flow;
+    timeout = setTimeout(() => dispatch(saveCart()), 800);
 };
 
 export const decrementItemInCart = (name) => async (dispatch) => {
@@ -69,8 +75,9 @@ export const decrementItemInCart = (name) => async (dispatch) => {
         type: DECREMENT_ITEM_IN_CART,
         payload: { name },
     });
-
-    timeout = setTimeout(() => dispatch(saveCart()), 3000);
+    // saves the cart only after the user is done decrementing to
+    // have a smoother flow;
+    timeout = setTimeout(() => dispatch(saveCart()), 800);
 };
 
 export const removeItemFromCart = (name) => async (dispatch, getState) => {

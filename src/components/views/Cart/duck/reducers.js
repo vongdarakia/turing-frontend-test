@@ -74,7 +74,6 @@ export default (state = lineItemTable, { type, payload } = {}) => {
             delete newCart[payload.name];
             return newCart;
         case STORE_CART:
-            console.log('store', payload.cart);
             payload.cart.forEach((lineItem) => {
                 newCart[lineItem.name] = lineItem;
             });

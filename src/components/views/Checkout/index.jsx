@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import DeliveryView from './DeliveryView';
@@ -6,6 +8,7 @@ import ConfirmationView from './ConfirmationView';
 import PaymentView from './PaymentView';
 import SuccessView from './SuccessView';
 import Cart from '../Cart';
+import { clearCart as clearCartAction } from '../Cart/duck/actions';
 
 class Checkout extends Component {
     constructor(props) {
@@ -60,12 +63,16 @@ class Checkout extends Component {
     };
 
     renderPaymentView = () => {
+        const { clearCart } = this.props;
         return (
             <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
                 <Elements>
                     <PaymentView
                         onFailure={this.handlePaymentFailure}
-                        onSuccess={this.goToNextStage}
+                        onSuccess={() => {
+                            clearCart();
+                            this.goToNextStage();
+                        }}
                         onClickBack={this.goToPreviousStage}
                     />
                 </Elements>
@@ -97,4 +104,15 @@ class Checkout extends Component {
     }
 }
 
-export default Checkout;
+Checkout.propTypes = {
+    clearCart: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+    clearCart: clearCartAction,
+};
+
+export default connect(
+    undefined,
+    mapDispatchToProps,
+)(Checkout);
